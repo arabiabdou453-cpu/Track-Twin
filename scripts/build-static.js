@@ -2,7 +2,8 @@
 // The live platform needs the Node server and its database, so its links lead to a page that says how it is shown.
 const fs = require('node:fs'), path = require('node:path');
 const root = path.resolve(__dirname, '..'), pub = path.join(root, 'public'), out = path.join(root, 'track-twin');
-fs.rmSync(out, { recursive: true, force: true });
+// Dot files stay, such as the host's project link in .vercel.
+if (fs.existsSync(out)) for (const f of fs.readdirSync(out)) if (!f.startsWith('.')) fs.rmSync(path.join(out, f), { recursive: true, force: true });
 fs.mkdirSync(path.join(out, 'css'), { recursive: true });
 
 const index = fs.readFileSync(path.join(pub, 'index.html'), 'utf8').replace(/href="\/(login|app)"/g, 'href="/demo"');
@@ -10,6 +11,12 @@ fs.writeFileSync(path.join(out, 'index.html'), index);
 const platform = /href="\/(login|app|dispatch|metrics|unit|er)"/g;
 fs.writeFileSync(path.join(out, 'twin.html'), fs.readFileSync(path.join(pub, 'twin.html'), 'utf8').replace(platform, 'href="/demo"'));
 for (const f of ['mark.png', 'css/app.css']) fs.copyFileSync(path.join(pub, f), path.join(out, f));
+
+// PLATFORM_URL is the live server for this presentation. The Android app is offered once it has been built.
+const liveUrl = (process.env.PLATFORM_URL || '').replace(/\/+$/, '');
+const apk = path.join(root, 'mobile', 'build', 'app', 'outputs', 'flutter-apk', 'app-release.apk');
+const hasApk = fs.existsSync(apk);
+if (hasApk) fs.copyFileSync(apk, path.join(out, 'TrackTwin.apk'));
 
 fs.writeFileSync(path.join(out, 'demo.html'), `<!doctype html>
 <html lang="fr" dir="ltr">
@@ -27,7 +34,7 @@ fs.writeFileSync(path.join(out, 'demo.html'), `<!doctype html>
   <h1>La plateforme se montre en direct</h1>
   <p>Cette page publique présente le projet et la simulation. Les écrans de l'agent, de l'équipage, de l'hôpital et du témoin fonctionnent avec notre serveur de démonstration, lancé pendant la présentation.</p>
   <p class="muted">Prototype étudiant, hackathon SolveX 3.0. Jamais testé sur une intervention réelle.</p>
-  <div class="row"><a class="btn" href="/twin">Voir la simulation</a><a class="btn line" href="/">Retour au site</a></div>
+  <div class="row">${liveUrl ? `<a class="btn" href="${liveUrl}/login">Ouvrir la plateforme</a>` : ''}${hasApk ? `<a class="btn line" href="/TrackTwin.apk" download>Télécharger l'application Android</a>` : ''}<a class="btn line" href="/twin">Voir la simulation</a><a class="btn line" href="/">Retour au site</a></div>
 </main>
 </body>
 </html>
