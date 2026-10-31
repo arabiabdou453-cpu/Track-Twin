@@ -39,5 +39,6 @@ fs.writeFileSync(path.join(out, 'demo.html'), `<!doctype html>
 </body>
 </html>
 `);
-fs.writeFileSync(path.join(out, 'vercel.json'), JSON.stringify({ cleanUrls: true }, null, 2) + '\n');
+const vercel = { cleanUrls: true, redirects: [{ source: '/:page(login|app|dispatch|metrics|unit|er)', destination: '/demo', permanent: false }] };
+fs.writeFileSync(path.join(out, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');
 console.log('static site written to track-twin/');
