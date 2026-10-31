@@ -1,0 +1,11 @@
+{
+  "name": "Track Twin · بلاغ حادث مرور",
+  "short_name": "بلاغ 14",
+  "start_url": "/app",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#f4f6fb",
+  "theme_color": "#f4f6fb",
+  "icons": [{ "src": "/mark.png", "sizes": "any", "type": "image/png", "purpose": "any" }]
+}

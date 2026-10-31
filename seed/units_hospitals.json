@@ -1,0 +1,1149 @@
+{
+ "attribution": "Data from OpenStreetMap (ODbL). Check every entry before relying on it.",
+ "places": [
+  {
+   "kind": "hospital",
+   "name": "Polyclinique Les Sources conseils de l'ordre",
+   "name_ar": "مستوصف الينابيع",
+   "lat": 36.733876,
+   "lon": 3.0582318,
+   "osm": "node/956483907",
+   "tags": {
+    "emergency": null,
+    "healthcare": "vaccination_centre",
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7388906,
+   "lon": 3.0506267,
+   "osm": "node/993807690",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7229158,
+   "lon": 3.0656846,
+   "osm": "node/2476980848",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital des brûlés",
+   "name_ar": null,
+   "lat": 36.7721949,
+   "lon": 3.0567171,
+   "osm": "node/2744651460",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7542316,
+   "lon": 3.0644231,
+   "osm": "node/2776940710",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "CHU Nafissa Hammoud (parnet)",
+   "name_ar": "المستشفى الجامعي نفيسة حمود",
+   "lat": 36.7366917,
+   "lon": 3.1038388,
+   "osm": "node/3004200407",
+   "tags": {
+    "emergency": null,
+    "healthcare": "vaccination_centre",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique des Orchidées",
+   "name_ar": null,
+   "lat": 36.7360825,
+   "lon": 3.0330002,
+   "osm": "node/3061964490",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7415485,
+   "lon": 3.1223096,
+   "osm": "node/3109233405",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7336101,
+   "lon": 3.0823926,
+   "osm": "node/3201193808",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Rouchai Boualem",
+   "name_ar": null,
+   "lat": 36.7521971,
+   "lon": 3.0670439,
+   "osm": "node/3334397403",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": "DGSN"
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7459919,
+   "lon": 3.0956694,
+   "osm": "node/3649619527",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Polyclinique Belaaredj",
+   "name_ar": "مصحة بلعرج",
+   "lat": 36.7427042,
+   "lon": 3.0649299,
+   "osm": "node/3786889385",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Les Glycines",
+   "name_ar": null,
+   "lat": 36.7572824,
+   "lon": 3.0417245,
+   "osm": "node/3884750015",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Urgences pédiatrique et chirurgie pediatrique",
+   "name_ar": null,
+   "lat": 36.7218361,
+   "lon": 3.1473409,
+   "osm": "node/4170340791",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Ziroud Yousef",
+   "name_ar": "مستشفى زيرود يوسف",
+   "lat": 36.7864739,
+   "lon": 3.0260964,
+   "osm": "node/4208929127",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "EHS Dr. MAOUCHE MOHAND AMOKRANE",
+   "name_ar": "عيادة محند امقران",
+   "lat": 36.7677862,
+   "lon": 3.0016562,
+   "osm": "node/4416216189",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.703592,
+   "lon": 3.125759,
+   "osm": "node/4456577892",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Nadia boujnah",
+   "name_ar": "نادية بوجناح",
+   "lat": 36.7880307,
+   "lon": 3.0202952,
+   "osm": "node/4581255978",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Aroua",
+   "name_ar": "عروة",
+   "lat": 36.741079,
+   "lon": 3.039529,
+   "osm": "node/4737083723",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre d'expertise Médicale (CNEMPN)",
+   "name_ar": null,
+   "lat": 36.71939,
+   "lon": 3.0599525,
+   "osm": "node/4794767523",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Polyclinique Bouchnafa",
+   "name_ar": "مصحة بوشنافة",
+   "lat": 36.7563995,
+   "lon": 3.0629111,
+   "osm": "node/4822390322",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre d'analyses médicales",
+   "name_ar": null,
+   "lat": 36.7551119,
+   "lon": 3.0351803,
+   "osm": "node/5039751720",
+   "tags": {
+    "emergency": null,
+    "healthcare": "medical_laboratory",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique algéro-cubaine",
+   "name_ar": "المصحة الكوبية الجزائرية لقرح القدم",
+   "lat": 36.7350305,
+   "lon": 3.0574631,
+   "osm": "node/5098331621",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Dr GUELLATI.A",
+   "name_ar": "دكتورة غلاتي أ",
+   "lat": 36.7251201,
+   "lon": 3.0527537,
+   "osm": "node/5133147524",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Polyclinique Mustapha Nakach",
+   "name_ar": "مصحة مصطفى نقاش",
+   "lat": 36.7404035,
+   "lon": 3.0647532,
+   "osm": "node/5473517521",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7674019,
+   "lon": 3.053517,
+   "osm": "node/5493365859",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique de Bir morad rais",
+   "name_ar": "عيادة بئر مرادرايس",
+   "lat": 36.7348887,
+   "lon": 3.034632,
+   "osm": "node/5765259135",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "القوات الجوية الجزائرية",
+   "lat": 36.7405059,
+   "lon": 3.1073539,
+   "osm": "node/5856817198",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "unit",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7384922,
+   "lon": 3.1273087,
+   "osm": "node/6044376743",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre médical Boudjemâa Moghni",
+   "name_ar": null,
+   "lat": 36.7403747,
+   "lon": 3.0985284,
+   "osm": "node/6187423686",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Epsp gynécologue pédiatrie",
+   "name_ar": null,
+   "lat": 36.7679829,
+   "lon": 3.031899,
+   "osm": "node/6189288087",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "clinic zohor عيادة زهور",
+   "name_ar": "عيادة زهور",
+   "lat": 36.7016323,
+   "lon": 3.0250966,
+   "osm": "node/10113736560",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "El Hamma",
+   "name_ar": null,
+   "lat": 36.7443224,
+   "lon": 3.0758822,
+   "osm": "node/10242606009",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7190082,
+   "lon": 3.0649542,
+   "osm": "node/10900946705",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Djamaa El Djazair Civil Protection Station",
+   "name_ar": null,
+   "lat": 36.7328633,
+   "lon": 3.1444442,
+   "osm": "node/11665618766",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Ali Aït Idir",
+   "name_ar": null,
+   "lat": 36.7874026,
+   "lon": 3.0584179,
+   "osm": "node/11942981566",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique du Val",
+   "name_ar": "عيادة الوادي",
+   "lat": 36.7583064,
+   "lon": 3.0253798,
+   "osm": "node/13149137101",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital El Hadi Flici (El Kettar)",
+   "name_ar": "مستشفى الهادي فليسي القطار",
+   "lat": 36.7851566,
+   "lon": 3.0516452,
+   "osm": "way/26253281",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Nafissa Hamoud",
+   "name_ar": "مستشفى الجامعي نفيسة حمود",
+   "lat": 36.7361663,
+   "lon": 3.1055043,
+   "osm": "way/28825181",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Mustapha Pacha",
+   "name_ar": "المستشفى الجامعي مصطفى باشا",
+   "lat": 36.7618001,
+   "lon": 3.0535857,
+   "osm": "way/28919252",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": "Ministère de la Santé et de la Réforme hospitalière"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Salim Zemirli",
+   "name_ar": "مستشفى سليم زميرلي",
+   "lat": 36.7032844,
+   "lon": 3.1236938,
+   "osm": "way/30350387",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7638783,
+   "lon": 3.0601356,
+   "osm": "way/50982870",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur وزارة الداخلية والجماعات المحلية والتهيئة العمرانية"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "EPH Djillali Belkhenchir - El Biar",
+   "name_ar": "المؤسسة العمومية الاستشفائية جيلالي بلخنشير - الأبيار",
+   "lat": 36.7737258,
+   "lon": 3.0404437,
+   "osm": "way/55035272",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7445319,
+   "lon": 3.0920139,
+   "osm": "way/123050078",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique militaire les Oliviers",
+   "name_ar": null,
+   "lat": 36.7262663,
+   "lon": 3.0590998,
+   "osm": "way/186937625",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7229193,
+   "lon": 3.1358002,
+   "osm": "way/201730366",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7011263,
+   "lon": 3.0911615,
+   "osm": "way/210898707",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital de Boukhroufa Abdelkader - Ben Aknoun",
+   "name_ar": "مستشفى عبد القادر بوخروفة - بن عكنون",
+   "lat": 36.7547224,
+   "lon": 3.0008064,
+   "osm": "way/216697959",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique Ophtalmologique",
+   "name_ar": null,
+   "lat": 36.7374537,
+   "lon": 3.0321468,
+   "osm": "way/217506872",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7183691,
+   "lon": 3.0860106,
+   "osm": "way/217692643",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur et des Collectivités locales"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "EHS Bachir Mentouri",
+   "name_ar": null,
+   "lat": 36.7261077,
+   "lon": 3.0866472,
+   "osm": "way/217697083",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital de Tixeraïne",
+   "name_ar": "مستشفى تيقصراين",
+   "lat": 36.7243325,
+   "lon": 3.0218981,
+   "osm": "way/227890170",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "EPSP Drid Hocine 1",
+   "name_ar": "مستشفى الامراض العقلية دريد الحسين( ا)",
+   "lat": 36.7385509,
+   "lon": 3.0844263,
+   "osm": "way/231883341",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7233088,
+   "lon": 3.1384817,
+   "osm": "way/241183923",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre Médicale Djenan Mabrouk",
+   "name_ar": null,
+   "lat": 36.7244245,
+   "lon": 3.1248927,
+   "osm": "way/241265165",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Militaire de Ain Naadja",
+   "name_ar": "المستشفى العسكري عين النعجة",
+   "lat": 36.7190289,
+   "lon": 3.0648811,
+   "osm": "way/246086623",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre Médical Bachdjarah",
+   "name_ar": null,
+   "lat": 36.7223038,
+   "lon": 3.119039,
+   "osm": "way/251256118",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Laboratoire médical Hussein Dey",
+   "name_ar": null,
+   "lat": 36.734442,
+   "lon": 3.1040681,
+   "osm": "way/252074570",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital Pédiatrique Hacen Badi",
+   "name_ar": "مستشفى حسن بادي",
+   "lat": 36.7218914,
+   "lon": 3.1469943,
+   "osm": "way/253592388",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Polyclinique Les Sources",
+   "name_ar": null,
+   "lat": 36.7338601,
+   "lon": 3.0580929,
+   "osm": "way/253995046",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7756617,
+   "lon": 3.0560041,
+   "osm": "way/260901004",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique Bouzareah",
+   "name_ar": "مستوصف بوزريعة",
+   "lat": 36.7895363,
+   "lon": 3.0174797,
+   "osm": "way/262048933",
+   "tags": {
+    "emergency": "no",
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hopital De Police",
+   "name_ar": "مستشفى الشرطة",
+   "lat": 36.7575216,
+   "lon": 3.0416234,
+   "osm": "way/263624389",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre de santé de la Police",
+   "name_ar": "المركز الصحي للشرطة",
+   "lat": 36.7521513,
+   "lon": 3.0669392,
+   "osm": "way/264325095",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital psychiatrique Drid Hocine (B)",
+   "name_ar": "مستشفى الامراض العقلية دريد الحسين (ب)",
+   "lat": 36.7384243,
+   "lon": 3.0865012,
+   "osm": "way/271903487",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre de soins Bachir Laadjouz;Dispensaire Maison du diabétique",
+   "name_ar": null,
+   "lat": 36.7470475,
+   "lon": 3.0787909,
+   "osm": "way/271912485",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre de soins Mourad Rachid",
+   "name_ar": null,
+   "lat": 36.7255688,
+   "lon": 3.0253145,
+   "osm": "way/274667738",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique des Orchidées",
+   "name_ar": null,
+   "lat": 36.7360751,
+   "lon": 3.032989,
+   "osm": "way/301992497",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Croissant Rouge",
+   "name_ar": null,
+   "lat": 36.7149554,
+   "lon": 3.1072136,
+   "osm": "way/347685816",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": "Protection civile",
+   "name_ar": "الحماية المدنية",
+   "lat": 36.7792105,
+   "lon": 3.0397982,
+   "osm": "way/360584591",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": "Ministère de l'Intérieur"
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7198167,
+   "lon": 3.096629,
+   "osm": "way/369268830",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Urwa",
+   "name_ar": "عروة",
+   "lat": 36.7411793,
+   "lon": 3.0394813,
+   "osm": "way/398716275",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique Zighout Amine",
+   "name_ar": null,
+   "lat": 36.7863153,
+   "lon": 3.0262497,
+   "osm": "way/420557893",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7214021,
+   "lon": 3.0506745,
+   "osm": "way/477373398",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Polyclinique de Sebbala",
+   "name_ar": null,
+   "lat": 36.71496,
+   "lon": 3.013063,
+   "osm": "way/554235723",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7030179,
+   "lon": 3.126489,
+   "osm": "way/599496565",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Hôpital des brûlés",
+   "name_ar": null,
+   "lat": 36.7722282,
+   "lon": 3.0564528,
+   "osm": "way/782776803",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique Belaredj",
+   "name_ar": "مصحة بلعرج",
+   "lat": 36.7426837,
+   "lon": 3.0649343,
+   "osm": "way/782994504",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique Mouhannad Amqran",
+   "name_ar": "عيادة محند امقران",
+   "lat": 36.7678267,
+   "lon": 3.0014148,
+   "osm": "way/783041002",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Maillot",
+   "name_ar": null,
+   "lat": 36.7899631,
+   "lon": 3.0461873,
+   "osm": "way/783041257",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Larbi tebssi",
+   "name_ar": "العربي التبسي",
+   "lat": 36.7544279,
+   "lon": 3.0574894,
+   "osm": "way/783091381",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique cubaine algérienne des ulcères du pied",
+   "name_ar": "المصحة الكوبية الجزائرية لقرح القدم",
+   "lat": 36.7350486,
+   "lon": 3.0573634,
+   "osm": "way/783850606",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Ghalati A",
+   "name_ar": "دكتورة غلاتي أ",
+   "lat": 36.7252357,
+   "lon": 3.0527444,
+   "osm": "way/783862892",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Clinique de Bir morad rais",
+   "name_ar": null,
+   "lat": 36.7347425,
+   "lon": 3.0344027,
+   "osm": "way/783877345",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Centre médical Boudjemâa Moghni",
+   "name_ar": null,
+   "lat": 36.7403263,
+   "lon": 3.0983849,
+   "osm": "way/783897428",
+   "tags": {
+    "emergency": null,
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "unit",
+   "name": null,
+   "name_ar": null,
+   "lat": 36.7494352,
+   "lon": 3.0876167,
+   "osm": "way/1255345129",
+   "tags": {
+    "emergency": null,
+    "healthcare": null,
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Service Médecine Interne d'Hôpital Birtraria",
+   "name_ar": "مصلحة الطب الداخلي بطرارية",
+   "lat": 36.7684522,
+   "lon": 3.0258433,
+   "osm": "way/1422963160",
+   "tags": {
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  },
+  {
+   "kind": "hospital",
+   "name": "Zouje Aayoun",
+   "name_ar": "مصحة زوج عيون",
+   "lat": 36.7879097,
+   "lon": 3.0610072,
+   "osm": "relation/17714490",
+   "tags": {
+    "emergency": "no",
+    "healthcare": "hospital",
+    "operator": null
+   }
+  }
+ ]
+}

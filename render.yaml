@@ -1,0 +1,26 @@
+# Render Blueprint. Secrets are asked for in the Render dashboard and never stored here.
+services:
+  - type: web
+    name: track-twin
+    runtime: docker
+    plan: starter            # a persistent disk needs a paid plan: check the current price
+    healthCheckPath: /login
+    disk:
+      name: data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: OPERATOR_PIN
+        sync: false
+      - key: CREW_PIN
+        sync: false
+      - key: HOSPITAL_PIN
+        sync: false
+      - key: PUBLIC_URL
+        sync: false
+      - key: SMSGATE_USERNAME
+        sync: false
+      - key: SMSGATE_PASSWORD
+        sync: false

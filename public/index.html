@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track Twin</title>
+<meta name="description" content="Track Twin relie le témoin, l'agent du 14, l'équipage et les urgences sur le même dossier d'accident. Projet étudiant, hackathon SolveX 3.0.">
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600;700&family=Cairo:wght@700;800&display=swap">
+<link rel="stylesheet" href="/css/app.css">
+<style>
+html, body { height: auto; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { background: #fff; font-size: 18px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 56px); }
+.chevrons { height: 14px; background: repeating-linear-gradient(135deg, var(--red) 0 26px, #fff 26px 52px); }
+.d { font-family: var(--display); font-weight: 800; text-transform: uppercase; }
+a.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 22px; border: 1px solid var(--ink); border-radius: 8px; font-weight: 600; text-decoration: none; transition: background-color .15s; }
+a.btn:hover { background: var(--soft); }
+a.btn.red { background: var(--red); border-color: var(--red); color: #fff; font-weight: 700; }
+a.btn.red:hover { background: var(--red-dark); }
+a.btn.dark { background: var(--ink); border-color: var(--ink); color: #fff; }
+a.btn.dark:hover { background: #2a2c31; }
+.nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; font-size: 28px; line-height: 1; text-decoration: none; }
+.logo { text-transform: none; }
+.menu { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-left: auto; font-size: 16px; font-weight: 500; }
+.menu a { text-decoration: none; }
+.menu a:hover { color: var(--red); }
+.nav a.btn { min-height: 44px; padding: 0 18px; }
+.hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 24px 40px; align-items: end; padding-block: 34px 44px; }
+h1 { margin: 0; font-size: clamp(56px, 8.1vw, 104px); line-height: .92; }
+h1 span { color: var(--red); }
+.hero p { font-size: 20px; line-height: 1.45; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+.show { position: relative; background: linear-gradient(#fff 0 90px, var(--red) 90px calc(100% - 90px), #fff calc(100% - 90px)); }
+.show .wrap { position: relative; }
+.panel { margin: 0; display: grid; grid-template-columns: 180px minmax(0, 1fr) 262px; min-height: 760px; background: #fff; border-radius: 16px; box-shadow: 0 30px 70px rgba(20, 22, 26, .32); overflow: hidden; font-size: 14px; line-height: 1.4; }
+.p-side { display: flex; flex-direction: column; gap: 4px; padding: 18px 12px; background: var(--ink); color: #e8e9eb; font-weight: 600; }
+.p-side div { padding: 10px 12px; border-radius: 8px; }
+.p-side .on { background: var(--red); color: #fff; }
+.p-side .tag { margin-top: auto; font-size: 12.5px; font-weight: 500; color: #c9ccd1; }
+.p-main { display: grid; grid-template-rows: auto minmax(260px, 1fr) auto; min-width: 0; }
+.p-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.p-kpis div { padding: 12px 16px; border-inline-end: 1px solid var(--line); color: var(--ink-3); font-weight: 500; }
+.p-kpis div:last-child { border: 0; }
+.p-kpis b { display: block; color: var(--ink); font: 800 34px/1.1 var(--display); }
+.p-kpis .bad, .p-kpis .bad b { color: var(--red-text); }
+.p-kpis .wait, .p-kpis .wait b { color: var(--amber-text); }
+.p-map { display: block; width: 100%; height: 100%; min-height: 260px; background: #f2f0ea; }
+.p-log { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 3px 10px; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.p-log time { color: var(--ink-3); }
+.p-info { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-inline-start: 1px solid var(--line); }
+.p1 { align-self: flex-start; padding: 2px 8px; background: var(--red); color: #fff; border-radius: 4px; font-weight: 700; font-size: 13px; }
+.p-info h3 { font: 800 28px/1.05 var(--display); text-transform: uppercase; }
+.p-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.p-tiles div { padding: 8px; background: var(--soft); border-radius: 6px; font-size: 12px; color: var(--ink-3); }
+.p-tiles b { display: block; font-size: 18px; color: var(--ink); }
+.p-eta { padding: 12px; background: var(--ink); color: #fff; border-radius: 8px; font-size: 13px; }
+.p-eta b { display: block; font: 800 58px/1 var(--display); }
+.ok { padding: 10px 12px; background: var(--green-soft); color: var(--green-text); border-radius: 8px; font-weight: 600; }
+.sim { padding: 10px 12px; background: var(--amber-soft); color: var(--amber-text); border-radius: 8px; font-weight: 600; }
+.phone { position: absolute; right: clamp(0px, 1vw, 22px); bottom: -46px; width: 196px; padding: 7px; background: var(--ink); border-radius: 30px; box-shadow: 0 24px 50px rgba(20, 22, 26, .42); }
+.phone-in { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 8px; height: 356px; padding: 12px 10px; background: #fff; border-radius: 24px; font-family: Cairo, sans-serif; text-align: center; font-size: 12px; font-weight: 700; }
+.mark { width: 30px; height: 30px; }
+.phone-btn { display: grid; place-content: center; background: var(--red); color: #fff; border-radius: 16px; font-size: 15px; font-weight: 800; }
+.phone-btn b { font: 800 84px/1 var(--display); }
+.phone-ok { padding: 7px; background: var(--green-soft); color: var(--green-text); border-radius: 8px; font-size: 11.5px; }
+
+section { padding-block: 72px; }
+h2 { margin-bottom: 28px; font: 800 clamp(40px, 5vw, 64px)/1 var(--display); text-transform: uppercase; letter-spacing: 0; }
+.nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+.nums b { display: block; font: 800 clamp(46px, 4.8vw, 62px)/1 var(--display); white-space: nowrap; }
+.nums .r { color: var(--red); }
+.nums p { margin-top: 6px; color: var(--ink-2); font-size: 16px; }
+.source { margin-top: 20px; font-size: 14px; color: var(--ink-3); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+.steps li { padding-top: 12px; border-top: 5px solid var(--ink); }
+.steps small { font-size: 14px; font-weight: 600; color: var(--ink-3); }
+.steps h3 { margin: 2px 0 6px; font: 800 26px/1.05 var(--display); text-transform: uppercase; }
+.steps p { font-size: 16px; color: var(--ink-2); }
+.dark { background: var(--ink); color: #fff; }
+.roles { border-top: 3px solid #fff; }
+.roles a { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px 32px; align-items: baseline; padding-block: 20px; border-bottom: 1px solid #55585f; text-decoration: none; }
+.roles a:hover strong { color: #ff6b75; }
+.roles strong { font: 800 36px/1 var(--display); text-transform: uppercase; }
+.roles span { color: #d9dbdf; }
+.limits { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px 48px; }
+.limits > div { flex: 1 1 480px; }
+.limits h2 { margin-bottom: 8px; font-size: clamp(34px, 4vw, 48px); }
+.limits p { color: var(--ink-2); max-width: 70ch; }
+footer { padding-block: 20px; border-top: 1px solid var(--line); font-size: 15px; color: var(--ink-3); }
+
+@media (max-width: 1080px) {
+  .phone { display: none; }
+  .panel { grid-template-columns: minmax(0, 1fr) 250px; min-height: 620px; }
+  .p-side { display: none; }
+}
+@media (max-width: 900px) {
+  .menu { order: 3; width: 100%; margin: 0; }
+  .nav a.btn { margin-left: auto; }
+}
+@media (max-width: 760px) {
+  .menu { order: 3; width: 100%; margin: 0; }
+  .nav a.btn { margin-left: auto; }
+  .hero { grid-template-columns: minmax(0, 1fr); padding-block: 20px 32px; }
+  .panel { grid-template-columns: minmax(0, 1fr); }
+  .p-info { border-inline-start: 0; border-top: 1px solid var(--line); }
+  .p-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p-kpis div:nth-child(2) { border-inline-end: 0; }
+  .p-kpis div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  section { padding-block: 52px; }
+  a.btn { flex: 1 1 auto; }
+}
+</style>
+</head>
+<body>
+<!-- TODO: ajouter la section équipe. Ne citer aucun partenaire sans accord écrit. -->
+<div class="chevrons" aria-hidden="true"></div>
+<nav class="wrap nav">
+  <a class="logo d" href="/"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</a>
+  <div class="menu"><a href="#parcours">Parcours</a><a href="#ecrans">Écrans</a><a href="#resultats">Résultats</a><a href="/app">Application</a><a href="/twin">Simulation</a></div>
+  <a class="btn dark" href="/login">Connexion</a>
+</nav>
+
+<main>
+  <header class="wrap hero">
+    <h1 class="d">Un accident.<br><span>Un dossier.</span><br>Quatre équipes.</h1>
+    <div>
+      <p>Le témoin, l'agent du 14, l'équipage et l'hôpital voient la même information, au même moment.</p>
+      <div class="cta"><a class="btn red" href="/login">Ouvrir la plateforme</a><a class="btn" href="/twin">La simulation</a></div>
+    </div>
+  </header>
+
+  <div class="show"><div class="wrap">
+    <figure class="panel" aria-label="Illustration de l'écran de l'agent, avec des données de démonstration">
+      <div class="p-side"><div class="on">Régulation</div><div>Unités</div><div>Hôpitaux</div><div>Délais</div><div>Simulation</div><div class="tag">Illustration, données de démonstration</div></div>
+      <div class="p-main">
+        <div class="p-kpis"><div><b>3</b>Ouverts</div><div class="bad"><b>1</b>Sans unité</div><div><b>15</b>Unités libres</div><div class="wait"><b>1</b>Sans réponse</div></div>
+        <svg class="p-map" viewBox="0 0 580 380" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Carte schématique de la baie d'Alger, avec l'itinéraire de l'ambulance et trois feux simulés">
+          <path d="M0 0H580V96C520 66 470 118 410 108 360 100 330 62 280 72 220 84 190 40 120 52 70 60 40 42 0 30Z" fill="#c9e1ec"/>
+          <path d="M0 30C40 42 70 60 120 52 190 40 220 84 280 72 330 62 360 100 410 108 470 118 520 66 580 96" fill="none" stroke="#a9c8d6" stroke-width="2"/>
+          <g fill="none" stroke="#fff" stroke-linecap="round"><path stroke-width="11" d="M0 150C90 130 170 150 260 170 350 190 450 180 580 150"/><path stroke-width="8" d="M30 380C80 300 130 250 170 150"/><path stroke-width="8" d="M200 380C240 300 280 240 300 176"/><path stroke-width="8" d="M400 380C400 310 430 240 470 172"/><path stroke-width="7" d="M0 270C120 250 240 290 360 270 440 256 520 270 580 250"/><path stroke-width="5" d="M100 200C160 220 210 210 270 230M330 220C380 240 430 230 500 210M120 320C180 310 240 340 310 330"/></g>
+          <path d="M70 322C110 276 180 262 250 276 300 286 350 280 372 262 410 232 440 200 462 176" fill="none" stroke="#14161a" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="186" cy="266" r="8" fill="#0a8a4e" stroke="#fff" stroke-width="3"/><circle cx="300" cy="284" r="8" fill="#f0a500" stroke="#fff" stroke-width="3"/><circle cx="410" cy="232" r="8" fill="#d4121f" stroke="#fff" stroke-width="3"/>
+          <circle cx="130" cy="290" r="10" fill="#fff" stroke="#14161a" stroke-width="4"/><circle cx="462" cy="176" r="20" fill="#d4121f" opacity=".22"/><circle cx="462" cy="176" r="10" fill="#d4121f" stroke="#fff" stroke-width="3"/>
+          <g font-family="Barlow, sans-serif" font-size="12" font-weight="600" fill="#5a5e66"><text x="40" y="118">Alger-Centre</text><text x="218" y="126">Belouizdad</text><text x="480" y="210">El Harrach</text><text x="60" y="250">El Mouradia</text><text x="330" y="330">Kouba</text></g>
+          <text x="330" y="44" font-family="Barlow, sans-serif" font-size="13" font-style="italic" fill="#4d7082">Baie d'Alger</text>
+        </svg>
+        <div class="p-log"><time>03:29:44</time><span>Équipage : mission acceptée</span><time>03:29:38</time><span>Hôpital alerté, unité envoyée</span><time>03:29:11</time><span>Gravité évaluée : critique</span><time>03:28:52</time><span>Position reçue du témoin, précision 10 m</span></div>
+      </div>
+      <div class="p-info">
+        <span class="p1">P1 · Critique</span>
+        <h3>RN 5, El Harrach</h3>
+        <div class="p-tiles"><div>Victimes<b>4</b></div><div>Bus<b>Oui</b></div><div>Coincées<b>Oui</b></div></div>
+        <div class="p-eta">Unité 10, arrivée estimée<b>4:04</b></div>
+        <div class="ok">Hôpital : alerte reçue</div>
+        <div class="sim">3 feux sur le trajet, simulés</div>
+      </div>
+    </figure>
+    <div class="phone" role="img" aria-label="Application du témoin sur téléphone : un grand bouton pour le 14"><div class="phone-in" dir="rtl">
+      <div>بلاغ حادث مرور</div>
+      <div class="phone-btn"><b dir="ltr">14</b>اضغط للاتصال</div>
+      <div class="phone-ok">موقعك جاهز · الدقة 12 م</div>
+    </div></div>
+  </div></div>
+
+  <section id="probleme"><div class="wrap">
+    <h2>Sur les routes d'Algérie en 2025</h2>
+    <div class="nums">
+      <div><b class="r">3 838</b><p>décès</p></div>
+      <div><b>37 020</b><p>blessés</p></div>
+      <div><b>26 976</b><p>accidents corporels</p></div>
+    </div>
+    <p class="source">Chiffres de la Délégation nationale à la sécurité routière, rapportés par <a href="https://algerie-eco.com/2026/02/19/algerie-3838-personnes-ont-trouve-la-mort-dans-des-accidents-de-la-route-en-2025/" rel="noopener">Algérie Eco, 19 février 2026</a>.</p>
+  </div></section>
+
+  <section id="resultats" style="padding-top:0"><div class="wrap">
+    <h2>Testé sur un jumeau numérique d'Alger</h2>
+    <div class="nums">
+      <div><b>10:44 → 9:59</b><p>Durée moyenne du trajet, aujourd'hui et avec priorité aux feux, sur 24 lieux à 9 000 véhicules par heure.</p></div>
+      <div><b class="r">45,5 s</b><p>Gain moyen, intervalle de confiance à 95 % de 17,9 à 79,6 s. Le gain de la plateforme seule n'est pas prouvé.</p></div>
+      <div><b>18 / 24</b><p>Lieux où l'ambulance arrive plus vite. Simulation SUMO, feux simulés, aucun test sur le terrain.</p></div>
+    </div>
+  </div></section>
+
+  <section id="parcours" style="padding-top:0"><div class="wrap">
+    <h2>Cinq étapes chronométrées</h2>
+    <ol class="steps">
+      <li><small>Étape 1</small><h3>Le lieu arrive</h3><p>Le témoin appelle le 14 et reçoit un lien qui envoie sa position.</p></li>
+      <li><small>Étape 2</small><h3>Six questions</h3><p>La gravité s'affiche. Le système propose, l'agent décide.</p></li>
+      <li><small>Étape 3</small><h3>Tous prévenus</h3><p>L'équipage reçoit la mission, l'hôpital confirme l'alerte.</p></li>
+      <li><small>Étape 4</small><h3>La route suit</h3><p>Itinéraire revu toutes les 15 s : un tracé plus rapide est proposé à l'équipage, qui décide. Feux ouverts en simulation.</p></li>
+      <li><small>Étape 5</small><h3>Le bilan</h3><p>La durée de chaque étape montre où le temps se perd.</p></li>
+    </ol>
+  </div></section>
+
+  <section id="ecrans" class="dark"><div class="wrap">
+    <h2>Un écran par métier</h2>
+    <div class="roles">
+      <a href="/login"><strong>Agent du 14</strong><span>Carte, accidents classés par priorité, unités libres et journal en direct.</span></a>
+      <a href="/login"><strong>Équipage</strong><span>Sur le téléphone : la mission, l'itinéraire et un grand bouton pour l'étape suivante.</span></a>
+      <a href="/login"><strong>Urgences</strong><span>Gravité, victimes et heure d'arrivée, connues à l'avance.</span></a>
+      <a href="/app"><strong>Témoin</strong><span>Un lien par SMS ou une application : un bouton, et la position arrive chez l'agent.</span></a>
+    </div>
+  </div></section>
+
+  <section><div class="wrap limits">
+    <div><h2>Ce qui reste à prouver</h2><p>Prototype jamais testé sur une intervention réelle. Trafic non calibré, feux en majorité hypothétiques, aucun feu réel commandé.</p></div>
+    <a class="btn red" href="/login">Essayer le parcours complet</a>
+  </div></section>
+</main>
+
+<footer><div class="wrap">Track Twin · Projet étudiant, hackathon SolveX 3.0. Cartes et routes : © contributeurs OpenStreetMap.</div></footer>
+</body>
+</html>

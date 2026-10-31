@@ -1,0 +1,2021 @@
+{
+ "type": "FeatureCollection",
+ "attribution": "Positions derived from OpenStreetMap (ODbL). Hypothetical lights are not real installations. Ranks come from an uncalibrated simulation.",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.087572,
+     36.739802
+    ]
+   },
+   "properties": {
+    "id": "1824991629",
+    "names": [
+     "Avenue Belkacemi Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 44,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.042644,
+     36.758506
+    ]
+   },
+   "properties": {
+    "id": "1831622404",
+    "names": [
+     "Avenue Colonel Ahmed Bougara"
+    ],
+    "source": "hypothetical",
+    "rank": 12,
+    "delaySeconds": 13.7,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.056143,
+     36.726353
+    ]
+   },
+   "properties": {
+    "id": "1929006551",
+    "names": [
+     "Rue n°12"
+    ],
+    "source": "hypothetical",
+    "rank": 45,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.05654,
+     36.762899
+    ]
+   },
+   "properties": {
+    "id": "2126598206",
+    "names": [
+     "Rue Mohamed Bourahla",
+     "Rue Hassiba Benbouali"
+    ],
+    "source": "hypothetical",
+    "rank": 25,
+    "delaySeconds": 3.9,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.080012,
+     36.740953
+    ]
+   },
+   "properties": {
+    "id": "2229976742",
+    "names": [
+     "Avenue Belkacemi Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 35,
+    "delaySeconds": 0,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.06229,
+     36.739115
+    ]
+   },
+   "properties": {
+    "id": "2232554859",
+    "names": [
+     "Avenue des Frères Bouadou"
+    ],
+    "source": "hypothetical",
+    "rank": 38,
+    "delaySeconds": 0,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.039106,
+     36.764267
+    ]
+   },
+   "properties": {
+    "id": "2260229059",
+    "names": [
+     "Avenue Colonel Ahmed Bougara",
+     "Chemin Oustani Belaid"
+    ],
+    "source": "hypothetical",
+    "rank": 33,
+    "delaySeconds": 0.2,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.079698,
+     36.729333
+    ]
+   },
+   "properties": {
+    "id": "2268888325",
+    "names": [
+     "Avenue des Frères Abdeslami"
+    ],
+    "source": "hypothetical",
+    "rank": 46,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.035519,
+     36.735214
+    ]
+   },
+   "properties": {
+    "id": "2270842388",
+    "names": [
+     "Chemin Saïd Hamdine"
+    ],
+    "source": "hypothetical",
+    "rank": 47,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.084708,
+     36.743627
+    ]
+   },
+   "properties": {
+    "id": "2402077509",
+    "names": [],
+    "source": "osm",
+    "rank": 48,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.086032,
+     36.745194
+    ]
+   },
+   "properties": {
+    "id": "2402077566",
+    "names": [],
+    "source": "osm",
+    "rank": 49,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.050162,
+     36.742141
+    ]
+   },
+   "properties": {
+    "id": "2535998939",
+    "names": [
+     "Rue Oukil Hadi Mohamed",
+     "Chemin Berger"
+    ],
+    "source": "hypothetical",
+    "rank": 9,
+    "delaySeconds": 19.5,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.046736,
+     36.763598
+    ]
+   },
+   "properties": {
+    "id": "284005438",
+    "names": [
+     "Rue Didouche Mourad",
+     "Boulevard Ibnou El Khatib"
+    ],
+    "source": "hypothetical",
+    "rank": 50,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.047265,
+     36.766608
+    ]
+   },
+   "properties": {
+    "id": "284035171",
+    "names": [
+     "Boulevard Krim Belkacem"
+    ],
+    "source": "hypothetical",
+    "rank": 51,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.050807,
+     36.769744
+    ]
+   },
+   "properties": {
+    "id": "284037634",
+    "names": [
+     "Boulevard Krim Belkacem",
+     "Avenue Yahia Ferradi"
+    ],
+    "source": "hypothetical",
+    "rank": 52,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.045001,
+     36.765473
+    ]
+   },
+   "properties": {
+    "id": "284041965",
+    "names": [
+     "Boulevard Krim Belkacem",
+     "Chemin Sfindja"
+    ],
+    "source": "hypothetical",
+    "rank": 39,
+    "delaySeconds": 0,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.044797,
+     36.762255
+    ]
+   },
+   "properties": {
+    "id": "284047000",
+    "names": [
+     "Boulevard Krim Belkacem",
+     "Rue Boufelgued Ali"
+    ],
+    "source": "hypothetical",
+    "rank": 40,
+    "delaySeconds": 0,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.064015,
+     36.738312
+    ]
+   },
+   "properties": {
+    "id": "287170387",
+    "names": [
+     "Avenue Belkacemi Mohamed",
+     "Avenue des Frères Bouadou"
+    ],
+    "source": "hypothetical",
+    "rank": 14,
+    "delaySeconds": 11.3,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.050678,
+     36.743808
+    ]
+   },
+   "properties": {
+    "id": "287186959",
+    "names": [
+     "Rue Oukil Hadi Mohamed",
+     "Rue Matiben Tayeb"
+    ],
+    "source": "hypothetical",
+    "rank": 4,
+    "delaySeconds": 49,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.047146,
+     36.755682
+    ]
+   },
+   "properties": {
+    "id": "287187182",
+    "names": [
+     "Avenue Soudani Boudjemaa"
+    ],
+    "source": "hypothetical",
+    "rank": 10,
+    "delaySeconds": 16.5,
+    "missions": 8
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.038271,
+     36.752584
+    ]
+   },
+   "properties": {
+    "id": "287503057",
+    "names": [
+     "Chemin du petit Hydra",
+     "Rue El Bitoum"
+    ],
+    "source": "hypothetical",
+    "rank": 53,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.046625,
+     36.74592
+    ]
+   },
+   "properties": {
+    "id": "287504439",
+    "names": [
+     "Avenue Mohamedi",
+     "Rue de Timgad"
+    ],
+    "source": "hypothetical",
+    "rank": 16,
+    "delaySeconds": 10.7,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.046883,
+     36.747551
+    ]
+   },
+   "properties": {
+    "id": "287504443",
+    "names": [
+     "Avenue Mohamedi",
+     "Chemin de l'Olivage"
+    ],
+    "source": "hypothetical",
+    "rank": 22,
+    "delaySeconds": 6.6,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.043222,
+     36.74995
+    ]
+   },
+   "properties": {
+    "id": "287504556",
+    "names": [
+     "Avenue Mohamedi"
+    ],
+    "source": "hypothetical",
+    "rank": 54,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.055544,
+     36.749927
+    ]
+   },
+   "properties": {
+    "id": "287506653",
+    "names": [
+     "Boulevard des Martyrs",
+     "Chemin Haddad Ali"
+    ],
+    "source": "hypothetical",
+    "rank": 1,
+    "delaySeconds": 124.9,
+    "missions": 6
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.064792,
+     36.743405
+    ]
+   },
+   "properties": {
+    "id": "287507333",
+    "names": [
+     "Boulevard Laala Abderahmane",
+     "Rue Benlaaredj Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 27,
+    "delaySeconds": 2,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.061598,
+     36.74109
+    ]
+   },
+   "properties": {
+    "id": "287507371",
+    "names": [
+     "Boulevard Laala Abderahmane",
+     "Rue Arezki Maouche"
+    ],
+    "source": "hypothetical",
+    "rank": 19,
+    "delaySeconds": 9.2,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.057606,
+     36.750431
+    ]
+   },
+   "properties": {
+    "id": "287508063",
+    "names": [
+     "Boulevard des Martyrs",
+     "Rue Touimer Abderahmane"
+    ],
+    "source": "hypothetical",
+    "rank": 11,
+    "delaySeconds": 15.2,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.052133,
+     36.724886
+    ]
+   },
+   "properties": {
+    "id": "288384584",
+    "names": [
+     "Rue Frères Djilali",
+     "Rue n°12"
+    ],
+    "source": "hypothetical",
+    "rank": 55,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.05016,
+     36.739473
+    ]
+   },
+   "properties": {
+    "id": "299845239",
+    "names": [
+     "Avenue des Frères Bouadou",
+     "Boulevard Slimane Amirat"
+    ],
+    "source": "hypothetical",
+    "rank": 37,
+    "delaySeconds": 0,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.041296,
+     36.751709
+    ]
+   },
+   "properties": {
+    "id": "299846473",
+    "names": [
+     "Avenue Mohamedi"
+    ],
+    "source": "hypothetical",
+    "rank": 56,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.085512,
+     36.730861
+    ]
+   },
+   "properties": {
+    "id": "312586689",
+    "names": [
+     "Avenue des Frères Abdeslami",
+     "Rue Garidi Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 57,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.075498,
+     36.729786
+    ]
+   },
+   "properties": {
+    "id": "312586712",
+    "names": [
+     "Chemin Khelifi Mustapha",
+     "Rue Général Nadjaat Slimane"
+    ],
+    "source": "hypothetical",
+    "rank": 58,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.086312,
+     36.734953
+    ]
+   },
+   "properties": {
+    "id": "312605470",
+    "names": [
+     "Rue Martinetti",
+     "Avenue Fellah Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 59,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.087473,
+     36.732356
+    ]
+   },
+   "properties": {
+    "id": "312613588",
+    "names": [
+     "Avenue Fellah Mohamed",
+     "Avenue des Frères Abdeslami"
+    ],
+    "source": "hypothetical",
+    "rank": 60,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.06698,
+     36.735128
+    ]
+   },
+   "properties": {
+    "id": "312615784",
+    "names": [
+     "Route des Anassers"
+    ],
+    "source": "hypothetical",
+    "rank": 61,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.070554,
+     36.735874
+    ]
+   },
+   "properties": {
+    "id": "312615800",
+    "names": [
+     "Route des Anassers"
+    ],
+    "source": "hypothetical",
+    "rank": 62,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.084528,
+     36.732232
+    ]
+   },
+   "properties": {
+    "id": "312622624",
+    "names": [
+     "Rue Garidi Mohamed",
+     "Rue des Frères Hama"
+    ],
+    "source": "hypothetical",
+    "rank": 63,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.048703,
+     36.737364
+    ]
+   },
+   "properties": {
+    "id": "312778861",
+    "names": [
+     "Boulevard Slimane Amirat"
+    ],
+    "source": "hypothetical",
+    "rank": 64,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.089917,
+     36.743407
+    ]
+   },
+   "properties": {
+    "id": "313148511",
+    "names": [
+     "Rue Rahim Keddour"
+    ],
+    "source": "hypothetical",
+    "rank": 65,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.039249,
+     36.736015
+    ]
+   },
+   "properties": {
+    "id": "313418145",
+    "names": [
+     "Chemin Saïd Hamdine"
+    ],
+    "source": "hypothetical",
+    "rank": 34,
+    "delaySeconds": 0.2,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.04159,
+     36.736771
+    ]
+   },
+   "properties": {
+    "id": "313419711",
+    "names": [
+     "Chemin Saïd Hamdine"
+    ],
+    "source": "hypothetical",
+    "rank": 23,
+    "delaySeconds": 6.5,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.049424,
+     36.761244
+    ]
+   },
+   "properties": {
+    "id": "313436671",
+    "names": [
+     "Avenue Ghermoul Ahmed",
+     "Rue Freres Kechacha"
+    ],
+    "source": "hypothetical",
+    "rank": 66,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.050386,
+     36.7599
+    ]
+   },
+   "properties": {
+    "id": "313436773",
+    "names": [
+     "Avenue Ghermoul Ahmed",
+     "Chemin de Gascogne"
+    ],
+    "source": "hypothetical",
+    "rank": 67,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.056263,
+     36.7682
+    ]
+   },
+   "properties": {
+    "id": "317901082",
+    "names": [
+     "Rue Hassiba Benbouali",
+     "Rue Akli Aïssou"
+    ],
+    "source": "hypothetical",
+    "rank": 68,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.054865,
+     36.739795
+    ]
+   },
+   "properties": {
+    "id": "319614560",
+    "names": [
+     "Avenue des Frères Bouadou",
+     "Rue Sellal Abdelkader"
+    ],
+    "source": "hypothetical",
+    "rank": 36,
+    "delaySeconds": 0,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.059345,
+     36.739504
+    ]
+   },
+   "properties": {
+    "id": "319617730",
+    "names": [
+     "Avenue des Frères Bouadou",
+     "Chemin des jasmins"
+    ],
+    "source": "hypothetical",
+    "rank": 20,
+    "delaySeconds": 9.1,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.069682,
+     36.738399
+    ]
+   },
+   "properties": {
+    "id": "319627310",
+    "names": [
+     "Avenue Belkacemi Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 30,
+    "delaySeconds": 1.1,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.051255,
+     36.752471
+    ]
+   },
+   "properties": {
+    "id": "319732717",
+    "names": [
+     "Boulevard des Martyrs",
+     "Rue El Allem Abderrezak"
+    ],
+    "source": "hypothetical",
+    "rank": 69,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.053052,
+     36.758231
+    ]
+   },
+   "properties": {
+    "id": "319855579",
+    "names": [
+     "Avenue Ghermoul Ahmed",
+     "Chemin Fatma Zohra Mellik"
+    ],
+    "source": "hypothetical",
+    "rank": 70,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.062242,
+     36.748653
+    ]
+   },
+   "properties": {
+    "id": "319879460",
+    "names": [
+     "Boulevard Laala Abderahmane",
+     "Boulevard des Martyrs"
+    ],
+    "source": "hypothetical",
+    "rank": 2,
+    "delaySeconds": 113.1,
+    "missions": 7
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.036769,
+     36.749962
+    ]
+   },
+   "properties": {
+    "id": "321123799",
+    "names": [
+     "Avenue Larbi Allik",
+     "Rue El Feth Ibn Khalkane"
+    ],
+    "source": "hypothetical",
+    "rank": 71,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.04496,
+     36.753736
+    ]
+   },
+   "properties": {
+    "id": "321406447",
+    "names": [
+     "Avenue Soudani Boudjemaa",
+     "Chemin Gueirrouard"
+    ],
+    "source": "hypothetical",
+    "rank": 41,
+    "delaySeconds": 0,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.040427,
+     36.762365
+    ]
+   },
+   "properties": {
+    "id": "321407913",
+    "names": [
+     "Avenue Colonel Ahmed Bougara",
+     "Rue Allalou Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 28,
+    "delaySeconds": 2,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.047553,
+     36.74335
+    ]
+   },
+   "properties": {
+    "id": "323915324",
+    "names": [
+     "Avenue Mohamedi"
+    ],
+    "source": "hypothetical",
+    "rank": 26,
+    "delaySeconds": 3,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.082085,
+     36.741799
+    ]
+   },
+   "properties": {
+    "id": "326147513",
+    "names": [
+     "Avenue Belkacemi Mohamed"
+    ],
+    "source": "osm",
+    "rank": 17,
+    "delaySeconds": 9.7,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.084638,
+     36.740913
+    ]
+   },
+   "properties": {
+    "id": "326160774",
+    "names": [
+     "Avenue Boudjatit Mahmoud",
+     "Rue Ammari Omar"
+    ],
+    "source": "hypothetical",
+    "rank": 72,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.082262,
+     36.729088
+    ]
+   },
+   "properties": {
+    "id": "326438607",
+    "names": [
+     "Avenue des Frères Abdeslami",
+     "Rue Chahboune Yahia"
+    ],
+    "source": "hypothetical",
+    "rank": 73,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.091029,
+     36.736591
+    ]
+   },
+   "properties": {
+    "id": "326577288",
+    "names": [
+     "Avenue Rabia Mohamed",
+     "Boulevard Cherifi Ahmed"
+    ],
+    "source": "hypothetical",
+    "rank": 74,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.087747,
+     36.736683
+    ]
+   },
+   "properties": {
+    "id": "326579293",
+    "names": [
+     "Avenue Rabia Mohamed"
+    ],
+    "source": "hypothetical",
+    "rank": 75,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.089854,
+     36.738043
+    ]
+   },
+   "properties": {
+    "id": "326600810",
+    "names": [
+     "Avenue Belkacemi Mohamed",
+     "Passage El Ferdoussi"
+    ],
+    "source": "hypothetical",
+    "rank": 76,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.064539,
+     36.735418
+    ]
+   },
+   "properties": {
+    "id": "326956783",
+    "names": [
+     "Rue El Anasser",
+     "Route des Anassers"
+    ],
+    "source": "hypothetical",
+    "rank": 77,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.058776,
+     36.727776
+    ]
+   },
+   "properties": {
+    "id": "326990027",
+    "names": [
+     "Route Hassan Bennaamane",
+     "Avenue Mohamed Haricha"
+    ],
+    "source": "hypothetical",
+    "rank": 78,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.0511,
+     36.721659
+    ]
+   },
+   "properties": {
+    "id": "350837846",
+    "names": [
+     "Rue Frères Djilali",
+     "Rue Mustapha Ourari"
+    ],
+    "source": "hypothetical",
+    "rank": 79,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.049984,
+     36.727113
+    ]
+   },
+   "properties": {
+    "id": "350837904",
+    "names": [
+     "Rue Frères Djilali",
+     "Rue Mustapha Ourari"
+    ],
+    "source": "hypothetical",
+    "rank": 80,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.054227,
+     36.725345
+    ]
+   },
+   "properties": {
+    "id": "373579991",
+    "names": [
+     "Rue n°12",
+     "Rue Ahmed Mezghiche"
+    ],
+    "source": "hypothetical",
+    "rank": 81,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.047914,
+     36.729395
+    ]
+   },
+   "properties": {
+    "id": "374540422",
+    "names": [
+     "Rue Frères Djilali"
+    ],
+    "source": "hypothetical",
+    "rank": 82,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.049607,
+     36.733406
+    ]
+   },
+   "properties": {
+    "id": "374555088",
+    "names": [
+     "Boulevard Slimane Amirat"
+    ],
+    "source": "hypothetical",
+    "rank": 83,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.059186,
+     36.766251
+    ]
+   },
+   "properties": {
+    "id": "5233489576",
+    "names": [
+     "Rue Lahcène Hemdani"
+    ],
+    "source": "osm",
+    "rank": 15,
+    "delaySeconds": 10.7,
+    "missions": 24
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.058794,
+     36.766143
+    ]
+   },
+   "properties": {
+    "id": "5233489577",
+    "names": [
+     "Rue Abroune Ahcène"
+    ],
+    "source": "osm",
+    "rank": 84,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.04207,
+     36.753358
+    ]
+   },
+   "properties": {
+    "id": "cluster_10816209800_10816209801_10816209802_287500511",
+    "names": [
+     "Chemin Bachir El Ibrahimi",
+     "Avenue Merabet Athmane"
+    ],
+    "source": "hypothetical",
+    "rank": 29,
+    "delaySeconds": 1.8,
+    "missions": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.050736,
+     36.745774
+    ]
+   },
+   "properties": {
+    "id": "cluster_11085854165_319612230",
+    "names": [
+     "Rue Oukil Hadi Mohamed",
+     "Rue Touimer Abdelkader"
+    ],
+    "source": "hypothetical",
+    "rank": 7,
+    "delaySeconds": 32,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.07863,
+     36.726088
+    ]
+   },
+   "properties": {
+    "id": "cluster_11219602367_12181253823_2268999374_2268999638_#1more",
+    "names": [
+     "Rue Général Nadjaat Slimane",
+     "Rue Mohamed Boulouh"
+    ],
+    "source": "hypothetical",
+    "rank": 85,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.07469,
+     36.727362
+    ]
+   },
+   "properties": {
+    "id": "cluster_11219602368_1236851150",
+    "names": [
+     "Rue Mohamed Boulouh"
+    ],
+    "source": "hypothetical",
+    "rank": 86,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.055426,
+     36.75759
+    ]
+   },
+   "properties": {
+    "id": "cluster_13083937719_313436997",
+    "names": [
+     "Rue Akhdari Abdelkader",
+     "Avenue Ghermoul Ahmed"
+    ],
+    "source": "hypothetical",
+    "rank": 3,
+    "delaySeconds": 59.2,
+    "missions": 13
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.050559,
+     36.749335
+    ]
+   },
+   "properties": {
+    "id": "cluster_14188544898_323932844",
+    "names": [
+     "Avenue de Pékin",
+     "Chemin des Frères Ziata"
+    ],
+    "source": "hypothetical",
+    "rank": 42,
+    "delaySeconds": 0,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.089304,
+     36.746301
+    ]
+   },
+   "properties": {
+    "id": "cluster_1631891474_326211255",
+    "names": [
+     "Rue Hassiba Benbouali",
+     "Rue Dar El Hamra"
+    ],
+    "source": "osm",
+    "rank": 87,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.055892,
+     36.765811
+    ]
+   },
+   "properties": {
+    "id": "cluster_1661666922_283272768_317903846",
+    "names": [
+     "Rue Hassiba Benbouali",
+     "Rue Victor Hugo"
+    ],
+    "source": "hypothetical",
+    "rank": 88,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.091724,
+     36.728161
+    ]
+   },
+   "properties": {
+    "id": "cluster_1824985768_1839910927_1839910930",
+    "names": [
+     "Rue Laalem Tahar"
+    ],
+    "source": "hypothetical",
+    "rank": 89,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.069204,
+     36.729123
+    ]
+   },
+   "properties": {
+    "id": "cluster_1827045137_1827048114_287182126_9508216982",
+    "names": [],
+    "source": "hypothetical",
+    "rank": 90,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.064122,
+     36.746497
+    ]
+   },
+   "properties": {
+    "id": "cluster_2081485172_2155661162",
+    "names": [
+     "Boulevard Laala Abderahmane",
+     "Rue El Khiem Omar"
+    ],
+    "source": "hypothetical",
+    "rank": 13,
+    "delaySeconds": 12,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.03892,
+     36.75024
+    ]
+   },
+   "properties": {
+    "id": "cluster_2155660296_287480735_287480810",
+    "names": [
+     "Avenue Larbi Allik",
+     "Boulevard Hamedine Mohamed Saïd"
+    ],
+    "source": "hypothetical",
+    "rank": 43,
+    "delaySeconds": 0,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.047537,
+     36.754015
+    ]
+   },
+   "properties": {
+    "id": "cluster_2232575690_287187235",
+    "names": [
+     "Avenue Soudani Boudjemaa"
+    ],
+    "source": "hypothetical",
+    "rank": 5,
+    "delaySeconds": 36.7,
+    "missions": 8
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.042365,
+     36.760327
+    ]
+   },
+   "properties": {
+    "id": "cluster_2260228997_648721477",
+    "names": [
+     "Avenue Colonel Ahmed Bougara",
+     "Chemin Youcef Ziryab"
+    ],
+    "source": "hypothetical",
+    "rank": 31,
+    "delaySeconds": 0.6,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.084044,
+     36.729844
+    ]
+   },
+   "properties": {
+    "id": "cluster_2270089402_326438337",
+    "names": [
+     "Avenue des Frères Abdeslami",
+     "Rue Alaoua Abdelkader"
+    ],
+    "source": "hypothetical",
+    "rank": 91,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.089273,
+     36.729506
+    ]
+   },
+   "properties": {
+    "id": "cluster_2398209891_2398209923_326331559_326331822",
+    "names": [],
+    "source": "hypothetical",
+    "rank": 92,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.038982,
+     36.740063
+    ]
+   },
+   "properties": {
+    "id": "cluster_2480779643_6619859188",
+    "names": [
+     "Boulevard Benyoucef Benkhedda (Chemin Sidi Yahia)"
+    ],
+    "source": "hypothetical",
+    "rank": 93,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.040251,
+     36.766872
+    ]
+   },
+   "properties": {
+    "id": "cluster_2726763774_287196269_318478809",
+    "names": [
+     "Chemin Henry Michau",
+     "Avenue Colonel Ahmed Bougara"
+    ],
+    "source": "hypothetical",
+    "rank": 94,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.090966,
+     36.739926
+    ]
+   },
+   "properties": {
+    "id": "cluster_2807673966_326247172",
+    "names": [
+     "Chemin Fernane Hannafi",
+     "Rue des Frères Mokhtari"
+    ],
+    "source": "hypothetical",
+    "rank": 95,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.057976,
+     36.76664
+    ]
+   },
+   "properties": {
+    "id": "cluster_283954449_283958768",
+    "names": [
+     "Rue Jawarhalal Nehru",
+     "Rue Ali Bessaoud"
+    ],
+    "source": "osm",
+    "rank": 6,
+    "delaySeconds": 34.8,
+    "missions": 24
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.048843,
+     36.764742
+    ]
+   },
+   "properties": {
+    "id": "cluster_283997414_283998561_318450590",
+    "names": [
+     "Rue Frères Alleg",
+     "Rue Beladjel Hocine"
+    ],
+    "source": "hypothetical",
+    "rank": 18,
+    "delaySeconds": 9.3,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.08231,
+     36.742177
+    ]
+   },
+   "properties": {
+    "id": "cluster_287170322_287465575_326148214",
+    "names": [
+     "Avenue Boudjatit Mahmoud",
+     "Rue Belouizdad Mohamed"
+    ],
+    "source": "osm",
+    "rank": 8,
+    "delaySeconds": 27.7,
+    "missions": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.056157,
+     36.730383
+    ]
+   },
+   "properties": {
+    "id": "cluster_287186243_3103547372_3103547377",
+    "names": [
+     "Route Hassan Bennaamane"
+    ],
+    "source": "hypothetical",
+    "rank": 96,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.049361,
+     36.750534
+    ]
+   },
+   "properties": {
+    "id": "cluster_287187258_319732868",
+    "names": [
+     "Avenue de Pékin",
+     "Rue El Allem Abderrezak"
+    ],
+    "source": "hypothetical",
+    "rank": 24,
+    "delaySeconds": 4.7,
+    "missions": 5
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.047214,
+     36.738446
+    ]
+   },
+   "properties": {
+    "id": "cluster_312778761_312779715",
+    "names": [
+     "Rue des Frères Benali",
+     "Chemin Sidi Yahia"
+    ],
+    "source": "hypothetical",
+    "rank": 32,
+    "delaySeconds": 0.6,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.044148,
+     36.763887
+    ]
+   },
+   "properties": {
+    "id": "cluster_318468823_7168109272",
+    "names": [
+     "Boulevard Krim Belkacem"
+    ],
+    "source": "hypothetical",
+    "rank": 97,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.053965,
+     36.751055
+    ]
+   },
+   "properties": {
+    "id": "cluster_319733274_319858287",
+    "names": [
+     "Boulevard des Martyrs",
+     "Rue des Frères Bourouba"
+    ],
+    "source": "hypothetical",
+    "rank": 21,
+    "delaySeconds": 7.3,
+    "missions": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     3.086971,
+     36.733502
+    ]
+   },
+   "properties": {
+    "id": "cluster_326564721_326582470_5648624823",
+    "names": [
+     "Avenue Fellah Mohamed",
+     "Boulevard Chems Eddine Hafidi"
+    ],
+    "source": "osm",
+    "rank": 98,
+    "delaySeconds": 0,
+    "missions": 0
+   }
+  }
+ ]
+}

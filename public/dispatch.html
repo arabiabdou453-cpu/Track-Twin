@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent du 14 · Track Twin</title>
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600;700&family=Cairo:wght@700&display=swap">
+<link rel="stylesheet" href="/vendor/leaflet.css"><link rel="stylesheet" href="/css/app.css">
+<script src="/vendor/leaflet.js"></script><script src="/vendor/qrcode.js"></script>
+</head>
+<body>
+<div class="dispatch">
+  <nav class="rail" id="rail" aria-label="Navigation"></nav>
+  <aside class="side left">
+    <form class="block" id="newForm">
+      <label>Nouvel appel au 14<input id="phone" type="tel" inputmode="tel" dir="ltr" placeholder="0555 12 34 56"></label>
+      <button class="primary" type="submit">Créer l'accident</button>
+      <p class="muted" id="smsNote" hidden>Envoi de SMS non activé&nbsp;: le lien et le QR code s'affichent à l'écran.</p>
+      <p class="error" id="msg" role="alert"></p>
+    </form>
+    <div id="pending"></div>
+    <h2 class="section-title">Accidents ouverts</h2>
+    <div id="list"></div>
+  </aside>
+  <div class="center">
+    <div class="kpis" id="kpis"></div>
+    <div id="map" aria-label="Carte des accidents et des unités"></div>
+    <section class="feed" aria-label="Journal des événements"><ol id="feed"></ol></section>
+  </div>
+  <aside class="side right">
+    <div class="tabs" role="group" aria-label="Panneau">
+      <button type="button" id="tabIncident" aria-pressed="true">Accident</button>
+      <button type="button" id="tabUnits" aria-pressed="false">Unités</button>
+    </div>
+    <div id="detail"></div>
+    <div id="units" hidden></div>
+  </aside>
+</div>
+<script type="module" src="/js/dispatch.js"></script>
+</body>
+</html>

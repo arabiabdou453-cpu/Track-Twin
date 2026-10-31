@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#f4f6fb">
+<title>أرسل موقعك · Track Twin</title>
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Cairo:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="/css/witness.css">
+</head>
+<body>
+<p class="demo"><b>نسخة عرض لمشروع طلابي، وليست من الحماية المدنية.</b> في حادث حقيقي، اتصل بالرقم 14.</p>
+<main class="screen">
+  <div class="top"><div class="logo" dir="ltr"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</div><span>إرسال الموقع</span></div>
+  <div class="status-bad" id="closed" role="alert" hidden>انتهت صلاحية هذا الرابط. أخبر العون بمكانك على الخط.</div>
+  <div id="open" style="display:flex;flex-direction:column;gap:14px">
+    <h1 class="tall">نحتاج موقعك لنصل إلى الحادث</h1>
+    <p class="soft">ابقَ على الخط مع العون.</p>
+    <button class="main-btn" id="send" type="button">أرسل موقعي</button>
+    <p id="status" role="status"></p>
+    <div id="photoBox" hidden>
+      <label class="file">أضف صورة (اختياري)<input id="photo" type="file" accept="image/*" capture="environment" hidden></label>
+      <p id="photoStatus" role="status" class="note" style="margin-top:8px"></p>
+    </div>
+  </div>
+  <div class="grow"></div>
+  <p class="note">يُستعمل موقعك وصورتك لهذا الحادث فقط، وتُحذف الصور ورقم الهاتف بعد 30 يوماً من إغلاقه.</p>
+</main>
+<script>
+const token = location.pathname.split('/').pop(), $ = id => document.getElementById(id);
+// Enough updates for a moving witness, and few enough to keep the journal readable and stay under the server's request limit.
+const SEND_EVERY_MS = 10000, MOVED_M = 20, ACCURACY_GAIN_M = 15;
+let last = null, delivered = false, sending = false;
+
+fetch('/api/link/' + token).then(r => r.json()).then(s => { if (!s.valid) { $('open').hidden = true; $('closed').hidden = false; } }).catch(() => {});
+
+const say = (cls, text) => { $('status').className = cls; $('status').textContent = text; };
+const movedFar = (a, b) => {
+  const toM = 111320, dLat = (a.latitude - b.latitude) * toM, dLon = (a.longitude - b.longitude) * toM * Math.cos(a.latitude * Math.PI / 180);
+  return Math.hypot(dLat, dLon) > MOVED_M;
+};
+const worthSending = c => !last || Date.now() - last.at >= SEND_EVERY_MS || movedFar(c, last) || last.accuracy - c.accuracy >= ACCURACY_GAIN_M;
+
+$('send').onclick = () => {
+  if (!navigator.geolocation) { say('status-bad', 'هاتفك لا يدعم تحديد الموقع. أخبر العون بمكانك على الخط.'); return; }
+  say('', 'جارٍ تحديد موقعك...');
+  navigator.geolocation.watchPosition(async p => {
+    const c = p.coords;
+    if (sending || !worthSending(c)) return;
+    sending = true;
+    try {
+      const r = await fetch('/api/link/' + token + '/location', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lat: c.latitude, lon: c.longitude, accuracy: c.accuracy }) });
+      if (r.ok) {
+        last = { latitude: c.latitude, longitude: c.longitude, accuracy: c.accuracy, at: Date.now() };
+        delivered = true;
+        say('status-ok', `وصل موقعك إلى العون، بدقة ${Math.round(c.accuracy)} م. ابقَ على الخط.`);
+        $('send').hidden = true;
+        $('photoBox').hidden = false;
+      } else if (!delivered) {
+        say('status-bad', 'لم يصل موقعك. أخبر العون بمكانك على الخط.');
+      }
+    } catch (e) {
+      if (!delivered) say('status-bad', 'لا يوجد اتصال بالإنترنت. أخبر العون بمكانك على الخط.');
+    }
+    sending = false;
+  }, () => { if (!delivered) say('status-bad', 'لم نحصل على موقعك. أخبر العون بمكانك على الخط.'); }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
+};
+$('photo').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  $('photoStatus').textContent = 'جارٍ الإرسال...';
+  try {
+    const r = await fetch('/api/link/' + token + '/photo', { method: 'POST', body: f });
+    $('photoStatus').textContent = r.ok ? 'وصلت الصورة.' : 'لم تصل الصورة. يكفي موقعك.';
+  } catch (x) { $('photoStatus').textContent = 'لم تصل الصورة. يكفي موقعك.'; }
+};
+</script>
+</body>
+</html>

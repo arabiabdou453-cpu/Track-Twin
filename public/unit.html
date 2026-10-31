@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ffffff">
+<title>Équipage · Track Twin</title>
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600;700&family=Cairo:wght@700&display=swap">
+<link rel="stylesheet" href="/vendor/leaflet.css"><link rel="stylesheet" href="/css/app.css">
+<style>html, body { height: auto; }</style>
+<script src="/vendor/leaflet.js"></script>
+</head>
+<body>
+<main class="crew" id="page"></main>
+<script type="module">
+import { h, api, live, severityPill, MISSION, topbar, minutes, marker, baseMap, assessmentFacts, lightColor, lightLabel, lightsNote } from '/js/common.js';
+const L = window.L, page = document.getElementById('page');
+let map, layer, current = null, watch = null, wake = null, lastSend = 0, gpsState = '';
+
+const mapEl = h('div', { id: 'unitMap' }), statusEl = h('div', {}), infoEl = h('div', {}), actionEl = h('div', { class: 'crew-part' });
+document.body.prepend(topbar('Équipage'));
+page.append(statusEl, mapEl, infoEl, actionEl);
+map = baseMap(L, mapEl); layer = L.layerGroup().addTo(map);
+
+function startGps() {
+  if (watch != null || !navigator.geolocation) return;
+  watch = navigator.geolocation.watchPosition(p => {
+    gpsState = 'ok';
+    if (!current || current.simulated || Date.now() - lastSend < 5000) return;
+    lastSend = Date.now();
+    api(`/missions/${current.id}/position`, { lat: p.coords.latitude, lon: p.coords.longitude }).catch(() => {});
+  }, () => { gpsState = 'denied'; }, { enableHighAccuracy: true, maximumAge: 3000 });
+  if ('wakeLock' in navigator) navigator.wakeLock.request('screen').then(w => { wake = w; }).catch(() => {});
+}
+const action = name => async () => { try { await api(`/missions/${current.id}/action`, { action: name }); } catch (e) { alertLine(e.message); } };
+const alertLine = t => actionEl.prepend(h('p', { class: 'error', role: 'alert' }, t));
+const NEXT = { sent: ['accept', 'Accepter la mission'], accepted: ['arrive_scene', 'Arrivé sur les lieux'], on_scene: ['leave_scene', "Départ vers l'hôpital"], to_hospital: ['arrive_hospital', "Arrivé à l'hôpital"] };
+const STEPS = [['sent', 'Mission'], ['accepted', 'Trajet'], ['on_scene', 'Sur place'], ['to_hospital', 'Hôpital']];
+
+let framed = '';
+live(s => {
+  const m = s.mission; current = m;
+  const n = m && NEXT[m.status];
+  const at = m ? STEPS.findIndex(x => x[0] === m.status) : -1;
+  statusEl.replaceChildren(h('div', { class: 'crew-part' },
+    h('div', { class: 'row', style: 'justify-content:space-between' }, h('h2', {}, s.unit.name), m ? h('span', { class: 'pill' }, MISSION[m.status]) : h('span', { class: 'pill ok' }, 'Disponible')),
+    !m && h('p', { class: 'muted' }, "Aucune mission. Elle s'affichera ici dès son envoi."),
+    m && h('ol', { class: 'stepper', 'aria-label': 'Étapes de la mission' }, STEPS.map(([key, label], k) => h('li', { class: k < at ? 'done' : k === at ? 'now' : '', 'aria-current': k === at ? 'step' : null }, label))),
+    m && h('div', { class: 'crew-head' },
+      h('div', { style: 'display:grid;gap:6px;justify-items:start' }, severityPill(s.incident.severity), h('b', { style: 'font-size:20px;font-weight:800' }, s.incident.road_label || 'Lieu sur la carte')),
+      h('div', {}, h('div', { class: 'crew-time' }, minutes(m.etaLeftS)), h('div', { class: 'muted', style: 'text-align:end' }, m.routeSource === 'osrm' ? 'sans le trafic' : "à vol d'oiseau")))));
+  layer.clearLayers();
+  if (m) {
+    if (m.route) { const line = L.polyline(m.route.map(c => [c[1], c[0]]), { color: '#14161a', weight: 6 }).addTo(layer); const key = `${m.id}:${m.status}`; if (key !== framed) { framed = key; map.fitBounds(line.getBounds(), { maxZoom: 16, padding: [20, 20] }); } }
+    marker(L, 'ambulance', m.unit.lat, m.unit.lon, s.unit.name).addTo(layer);
+    if (s.incident.lat != null && ['sent', 'accepted', 'on_scene'].includes(m.status)) marker(L, 'accident', s.incident.lat, s.incident.lon, 'Accident').addTo(layer);
+    if (m.hospital) marker(L, 'hospital', m.hospital.lat, m.hospital.lon, m.hospital.name).addTo(layer);
+    for (const p of m.priority) L.circleMarker([p.lat, p.lon], { radius: 9, color: lightColor(p.status), weight: 3, fillOpacity: .6 }).bindTooltip(lightLabel(p)).addTo(layer);
+  }
+  if (!infoEl.contains(document.activeElement) || document.activeElement.tagName !== 'INPUT') {
+    const a = s.incident && s.incident.assessment;
+    infoEl.replaceChildren(!m ? '' : h('div', { class: 'crew-part' },
+      h('div', { class: 'facts' }, assessmentFacts(a)),
+      m.hospital && h('p', {}, m.hospital.name, ' : ', h('b', {}, m.ackPending ? 'en attente de confirmation' : 'alerte reçue')),
+      m.priority.length > 0 && h('p', { class: 'muted' }, lightsNote(m.priority)),
+      m.status === 'on_scene' && h('form', { class: 'row', style: 'align-items:flex-end', onsubmit: async e => { e.preventDefault(); try { await api(`/missions/${m.id}/victims`, { victims: +e.target.v.value }); e.target.v.blur(); } catch (x) { alertLine(x.message); } } },
+        h('label', { class: 'grow' }, 'Nombre de victimes sur place', h('input', { name: 'v', type: 'number', min: 0, value: a ? a.victims : 1 })), h('button', { type: 'submit' }, 'Mettre à jour'))));
+  }
+  const sg = m && m.suggestion;
+  if (sg) L.polyline(sg.route.map(c => [c[1], c[0]]), { color: '#2bb673', weight: 5, dashArray: '8 8' }).addTo(layer);
+  const answer = accept => async () => { try { await api(`/missions/${m.id}/route`, { accept }); } catch (e) { alertLine(e.message); } };
+  actionEl.replaceChildren(
+    sg ? h('div', { class: 'crew-part', style: 'border:1px solid var(--open)' },
+      h('b', {}, `Itinéraire plus rapide proposé${sg.gainS ? ` : environ ${minutes(sg.gainS)} de moins` : ''}`),
+      h('p', { class: 'muted' }, "Tracé en vert pointillé sur la carte. Votre itinéraire ne change que si vous acceptez."),
+      h('div', { class: 'row' }, h('button', { type: 'button', class: 'go', onclick: answer(true) }, 'Accepter'), h('button', { type: 'button', onclick: answer(false) }, 'Garder le mien'))) : '',
+    m && !m.simulated && gpsState === 'denied' ? h('p', { class: 'error' }, "Position indisponible : activez le GPS ou prévenez l'agent par radio.") : '',
+    m && m.status !== 'sent' && !m.simulated ? h('p', { class: 'muted' }, "Gardez cette page ouverte et l'écran allumé pour que votre position arrive.") : '',
+    n ? h('button', { type: 'button', class: `big-btn ${m.status === 'sent' ? 'primary' : 'go'}`, onclick: async () => { startGps(); await action(n[0])(); } }, n[1]) : '');
+  if (m && m.status !== 'sent') startGps();
+});
+</script>
+</body>
+</html>

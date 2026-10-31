@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Urgences · Track Twin</title>
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600;700&family=Cairo:wght@700&display=swap">
+<link rel="stylesheet" href="/css/app.css">
+<style>html, body { height: auto; }</style>
+</head>
+<body>
+<main class="page" id="page"></main>
+<script type="module">
+import { h, api, live, severityPill, MISSION, PRIORITY, topbar, minutes, assessmentFacts } from '/js/common.js';
+const page = document.getElementById('page');
+const soundBtn = h('button', { type: 'button', class: 'line', onclick: () => { audio = audio || new AudioContext(); audio.resume(); sound = true; soundBtn.textContent = 'Alerte sonore activée'; soundBtn.disabled = true; } }, 'Activer le son');
+const statusEl = h('span', {}), fullBtn = h('button', { type: 'button', class: 'line' }, '');
+document.body.prepend(topbar('Urgences', [statusEl, fullBtn, soundBtn]));
+let audio = null, sound = false, known = '', hospital = null;
+fullBtn.addEventListener('click', async () => { await api('/hospital/status', { available: !hospital.available }); });
+const beep = () => { if (!sound) return; const o = audio.createOscillator(), g = audio.createGain(); o.frequency.value = 880; g.gain.value = .2; o.connect(g).connect(audio.destination); o.start(); o.stop(audio.currentTime + .4); };
+const post = path => async () => { try { await api(path, {}); } catch (e) { page.prepend(h('p', { class: 'error', role: 'alert' }, e.message)); } };
+const eta = m => (m.routeSource === 'osrm' ? "avant l'arrivée, sans le trafic en direct" : "avant l'arrivée, estimation approximative");
+const actions = m => [
+  m.ackPending ? h('button', { type: 'button', class: 'primary big-btn', onclick: post(`/missions/${m.id}/ack`) }, "J'ai reçu l'alerte") : h('span', { class: 'pill ok' }, 'Réception confirmée'),
+  !m.ackPending && !m.readyAt && h('button', { type: 'button', class: 'go', onclick: post(`/missions/${m.id}/ready`) }, "L'équipe est prête"),
+  m.readyAt && h('span', { class: 'pill ok' }, "L'équipe est prête"),
+];
+
+live(s => {
+  hospital = s.hospital;
+  const waiting = s.incoming.filter(m => m.ackPending).map(m => m.id).join();
+  if (waiting && waiting !== known) beep();
+  known = waiting;
+  statusEl.replaceChildren(h('b', {}, s.hospital.name), ' ', h('span', { class: `pill ${s.hospital.available ? 'ok' : 'bad'}` }, s.hospital.available ? 'Disponible' : 'Complet'));
+  fullBtn.textContent = s.hospital.available ? 'Déclarer complet' : 'Déclarer disponible';
+  // An unconfirmed alert comes first, then the nearest arrival.
+  const list = [...s.incoming].sort((a, b) => (b.ackPending - a.ackPending) || ((a.etaLeftS ?? 1e9) - (b.etaLeftS ?? 1e9)));
+  if (!list.length) { page.replaceChildren(h('div', { class: 'card' }, h('h1', {}, 'Aucun blessé attendu'), h('p', { class: 'muted' }, "L'alerte s'affichera ici dès qu'une unité sera envoyée vers vous."))); return; }
+  const [first, ...rest] = list;
+  page.replaceChildren(h('div', { class: 'er-grid' },
+    h('article', { class: `card er-next ${first.ackPending ? 'alert' : ''}` },
+      h('div', { class: 'er-head' },
+        h('div', { style: 'display:grid;gap:8px;justify-items:start' }, severityPill(first.incident.severity), h('h1', {}, `Accident ${first.incident.id}`), h('span', { class: 'muted' }, `${first.unit.name} · ${MISSION[first.status] || first.status}`)),
+        h('div', { style: 'text-align:right' }, h('div', { class: 'er-time' }, minutes(first.etaLeftS)), h('span', { class: 'muted' }, eta(first)))),
+      h('div', { class: 'facts' }, assessmentFacts(first.incident.assessment)),
+      actions(first)),
+    h('aside', { class: 'er-side' },
+      h('h2', {}, `Ambulances attendues : ${list.length}`),
+      rest.map(m => h('div', { class: `card ${m.ackPending ? 'alert' : ''}` },
+        h('div', { class: 'row', style: 'justify-content:space-between' }, h('h2', {}, `Accident ${m.incident.id}`), h('span', { class: 'bigtime' }, minutes(m.etaLeftS))),
+        severityPill(m.incident.severity), h('span', { class: 'muted' }, `${m.unit.name} · ${MISSION[m.status] || m.status}`), actions(m))),
+      !rest.length && h('p', { class: 'muted' }, 'Aucune autre ambulance attendue.'),
+      h('p', { class: 'muted' }, "Le numéro du témoin n'apparaît jamais sur cet écran."))));
+});
+</script>
+</body>
+</html>

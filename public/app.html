@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f6fb">
+<link rel="manifest" href="/app.webmanifest">
+<link rel="icon" href="/mark.png">
+<title>بلاغ حادث مرور · Track Twin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Cairo:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="/css/witness.css">
+</head>
+<body>
+
+<p class="demo" id="demo"><b>نسخة عرض: لا تتصل بالرقم 14 ولا تصل إلى الحماية المدنية.</b> في حادث حقيقي، اتصل بالرقم 14 من تطبيق الهاتف.</p>
+
+<main class="screen" id="home">
+  <div class="top"><div class="logo" dir="ltr"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</div><span>بلاغ حادث مرور</span></div>
+  <a class="call-big" id="call" href="#" data-call>
+    <span class="num" dir="ltr">14</span>
+    <b>اضغط للاتصال</b>
+    <small>ويُرسل موقعك إلى العون</small>
+  </a>
+  <div class="dash" aria-hidden="true"></div>
+  <div class="ready" role="status"><i class="dot" id="readyDot"></i><b id="readyText">سيُطلب منك إذن الموقع</b><span id="readyAcc"></span></div>
+  <div class="field">
+    <label for="phone">رقم هاتفك (اختياري)</label>
+    <input id="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="0555 12 34 56">
+  </div>
+  <p class="note">العون يتأكد من كل بلاغ قبل إرسال الإسعاف. البلاغ الكاذب يعطل إنقاذ غيرك.</p>
+</main>
+
+<main class="screen" id="sending" hidden>
+  <div class="top"><div class="logo" dir="ltr"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</div><span>بلاغ حادث مرور</span></div>
+  <h1 class="tall">جارٍ إرسال موقعك</h1>
+  <p class="soft">أكمل المكالمة مع الرقم 14. لا تغلق هذه الصفحة إن استطعت.</p>
+  <ol class="route" role="status">
+    <li><i class="dot ok"></i>فتح الاتصال بالرقم 14</li>
+    <li class="now"><i class="dot wait"></i>إرسال الموقع إلى العون</li>
+    <li class="next"><i class="dot"></i>تأكيد الوصول</li>
+  </ol>
+  <div class="grow"></div>
+  <a class="call" href="#" data-call>اتصل مجدداً بالرقم <span class="num" dir="ltr">14</span></a>
+</main>
+
+<main class="screen" id="confirmed" hidden>
+  <div class="top"><div class="logo" dir="ltr"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</div><span>بلاغ حادث مرور</span></div>
+  <div class="band good" role="status">
+    <h1>وصل موقعك إلى العون</h1>
+    <p>ابقَ على الخط مع الرقم 14 وأجب عن أسئلته.</p>
+  </div>
+  <h2>في انتظار الإسعاف</h2>
+  <ul class="list">
+    <li>ابتعد عن مسار السيارات.</li>
+    <li>لا تحرك المصاب إلا إذا كان في خطر مباشر.</li>
+    <li>أبقِ هاتفك قريباً منك، فقد يتصل بك العون.</li>
+  </ul>
+  <div class="grow"></div>
+  <a class="call" href="#" data-call>اتصل مجدداً بالرقم <span class="num" dir="ltr">14</span></a>
+</main>
+
+<main class="screen" id="failed" hidden>
+  <div class="top"><div class="logo" dir="ltr"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</div><span>بلاغ حادث مرور</span></div>
+  <div class="band warn" role="alert">
+    <h1>لم يصل موقعك</h1>
+    <p id="failReason">أخبر العون بمكانك على الخط.</p>
+  </div>
+  <h2>قل له</h2>
+  <ul class="list">
+    <li>اسم الطريق أو البلدية.</li>
+    <li>اتجاه السير.</li>
+    <li>أقرب معلم تراه.</li>
+  </ul>
+  <div class="grow"></div>
+  <button class="again" id="again" type="button">أعد إرسال موقعي</button>
+  <a class="call" href="#" data-call>اتصل بالرقم <span class="num" dir="ltr">14</span></a>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+// This prototype reaches no real agent, so it must not dial the real 14 or let anyone believe help is coming.
+// Set to true only once the Civil Protection has approved it and an agent really watches these reports.
+const LIVE = false;
+$('demo').hidden = LIVE;
+for (const a of document.querySelectorAll('[data-call]')) {
+  if (LIVE) a.href = 'tel:14';
+  else a.addEventListener('click', e => e.preventDefault());
+}
+const SCREENS = ['home', 'sending', 'confirmed', 'failed'];
+const show = name => { for (const s of SCREENS) $(s).hidden = s !== name; scrollTo(0, 0); };
+const GEO = { enableHighAccuracy: true, maximumAge: 30000, timeout: 15000 };
+const RESEND_AFTER_MS = 120000, RETRY_MS = 5000, MAX_TRIES = 4;
+
+let fix = null, sentAt = 0, busy = false, wanted = false, tries = 0, retry = null;
+
+try { $('phone').value = localStorage.getItem('tracktwin_phone') || ''; } catch (e) {}
+
+const haveFix = p => {
+  fix = p.coords;
+  $('readyDot').className = 'dot ok';
+  $('readyText').textContent = 'موقعك جاهز';
+  $('readyAcc').textContent = `الدقة ${Math.round(fix.accuracy)} م`;
+};
+
+// The dialer may cover this page at once, so the location is found beforehand wherever permission already exists.
+function prepare() {
+  if (!navigator.geolocation || !navigator.permissions) return;
+  navigator.permissions.query({ name: 'geolocation' }).then(s => {
+    if (s.state === 'granted') navigator.geolocation.watchPosition(haveFix, () => {}, GEO);
+  }).catch(() => {});
+}
+
+const fail = reason => {
+  busy = false;
+  $('failReason').textContent = reason;
+  show('failed');
+};
+
+const locate = () => new Promise((ok, no) => {
+  if (fix) return ok(fix);
+  if (!navigator.geolocation) return no(new Error('unsupported'));
+  navigator.geolocation.getCurrentPosition(p => { haveFix(p); ok(fix); }, no, GEO);
+});
+
+async function report() {
+  if (busy || !wanted) return;
+  if (Date.now() - sentAt < RESEND_AFTER_MS) { wanted = false; show('confirmed'); return; }
+  busy = true;
+  clearTimeout(retry);
+  show('sending');
+  let c;
+  try {
+    c = await locate();
+  } catch (e) {
+    wanted = false;
+    return fail(e.code === 1 ? 'لم تسمح بمشاركة الموقع. أخبر العون بمكانك على الخط.' : 'لم نحدد موقعك. أخبر العون بمكانك على الخط.');
+  }
+  try {
+    const res = await fetch('/api/app/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lat: c.latitude, lon: c.longitude, accuracy: Math.round(c.accuracy), phone: $('phone').value.trim() || null }) });
+    if (!res.ok) { wanted = false; return fail('لم يقبل الخادم البلاغ. أخبر العون بمكانك على الخط.'); }
+    sentAt = Date.now();
+    wanted = false;
+    busy = false;
+    show('confirmed');
+  } catch (e) {
+    busy = false;
+    tries += 1;
+    if (tries < MAX_TRIES) { retry = setTimeout(report, RETRY_MS); return; }
+    wanted = false;
+    fail('لا يوجد اتصال بالإنترنت. أخبر العون بمكانك على الخط.');
+  }
+}
+
+const start = () => { wanted = true; tries = 0; report(); };
+
+$('call').addEventListener('click', () => {
+  try { localStorage.setItem('tracktwin_phone', $('phone').value); } catch (e) {}
+  start();
+});
+$('again').addEventListener('click', start);
+
+// Browsers may pause this page during the call, so pending work resumes on return.
+document.addEventListener('visibilitychange', () => { if (!document.hidden) report(); });
+addEventListener('online', report);
+
+prepare();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+</script>
+</body>
+</html>

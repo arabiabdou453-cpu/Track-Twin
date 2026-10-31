@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion · Track Twin</title>
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600;700&family=Cairo:wght@700&display=swap">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<form class="login card" id="form">
+  <a class="brand" href="/" style="text-decoration:none"><img class="mark" src="/mark.png" alt="" width="30" height="30">Track Twin</a>
+  <h1>Connexion</h1>
+  <label>Je suis<select id="role"><option value="operator">Agent de la Protection civile</option><option value="crew">Équipage d'ambulance</option><option value="hospital">Hôpital</option></select></label>
+  <label id="whichBox" hidden><span id="whichLabel"></span><select id="which"></select></label>
+  <label>Code<input id="pin" type="password" inputmode="numeric" autocomplete="current-password" required></label>
+  <p class="error" id="msg" role="alert"></p>
+  <button class="primary" type="submit">Se connecter</button>
+</form>
+<script type="module">
+import { api } from '/js/common.js';
+const o = await api('/login-options'), $ = id => document.getElementById(id);
+function fill() {
+  const r = $('role').value, list = r === 'crew' ? o.units : r === 'hospital' ? o.hospitals : null;
+  $('whichBox').hidden = !list;
+  if (!list) return;
+  $('whichLabel').textContent = r === 'crew' ? 'Unité' : 'Hôpital';
+  $('which').replaceChildren(...list.map(x => Object.assign(document.createElement('option'), { value: x.id, textContent: x.name })));
+}
+$('role').addEventListener('change', fill); fill();
+$('form').addEventListener('submit', async e => {
+  e.preventDefault(); $('msg').textContent = '';
+  try {
+    const r = await api('/login', { role: $('role').value, id: +$('which').value || 0, pin: $('pin').value });
+    location.href = r.role === 'operator' ? '/dispatch' : r.role === 'crew' ? '/unit' : '/er';
+  } catch (x) { $('msg').textContent = x.message; }
+});
+</script>
+</body>
+</html>

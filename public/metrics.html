@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Délais · Track Twin</title>
+<link rel="icon" href="/mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600;700&family=Cairo:wght@700&display=swap">
+<link rel="stylesheet" href="/css/app.css">
+<style>html, body { height: auto; }</style>
+</head>
+<body>
+<main class="page" id="page"></main>
+<script type="module">
+import { h, api, topbar, minutes, clock, STATUS, severityPill } from '/js/common.js';
+document.body.prepend(topbar("Délais d'intervention", [h('a', { href: '/dispatch', class: 'navlink' }, "Écran de l'agent"), h('a', { href: '/twin', class: 'navlink' }, 'Simulation')]));
+const d = await api('/metrics'), page = document.getElementById('page');
+const summary = d.summary || {}, slowest = d.slowest, top = Math.max(1, ...d.averages.filter(a => a != null));
+const kpi = (label, value, note, cls) => h('div', {}, h('span', { class: 'muted' }, label), h('b', { class: cls || null }, value), h('span', { class: 'muted' }, note));
+page.append(
+  h('h1', {}, "Où le temps se perd"),
+  h('div', { class: 'kpi-grid' },
+    kpi('Accidents enregistrés', String(summary.totalIncidents ?? d.incidents.length), `${summary.closedWithArrival ?? 0} clôturés avec arrivée à l'hôpital`),
+    kpi('Délai moyen total', minutes(summary.avgTotalS), "De l'appel à l'arrivée à l'hôpital"),
+    kpi('Étape la plus lente', slowest ? slowest.name : '—', slowest ? `Moyenne : ${minutes(slowest.durationS)}` : 'Aucun délai mesuré', `text ${slowest ? 'wait' : ''}`),
+    kpi('Gain en simulation', '45,5 s', 'Moyenne SUMO sur 24 lieux, pas une mesure sur le terrain', 'sim')),
+  h('section', { class: 'card' }, h('h2', {}, 'Moyenne par étape'), h('p', { class: 'muted' }, 'Uniquement les accidents enregistrés sur cette plateforme.'),
+    d.stages.map((s, k) => h('div', { class: `stage ${slowest && slowest.index === k ? 'slowest' : ''}` },
+      h('span', {}, s), h('div', { class: 'stage-meter' }, h('i', { style: `width:${d.averages[k] == null ? 0 : Math.round(d.averages[k] / top * 100)}%` })), h('b', { class: 'num', style: 'text-align:end' }, minutes(d.averages[k]))))),
+  (d.perDay || []).length ? h('section', { class: 'card' }, h('h2', {}, 'Activité par jour'), h('div', { class: 'table-wrap' }, h('table', {},
+    h('thead', {}, h('tr', {}, h('th', {}, 'Date'), h('th', { class: 'n' }, 'Accidents'), h('th', { class: 'n' }, 'Délai moyen total'))),
+    h('tbody', {}, d.perDay.map(x => h('tr', {}, h('td', { class: 'num' }, x.day), h('td', { class: 'n' }, String(x.count)), h('td', { class: 'n' }, minutes(x.avgTotalS)))))))) : '',
+  h('section', { class: 'card' }, h('h2', {}, 'Tous les accidents'), d.incidents.length ? h('div', { class: 'table-wrap' }, h('table', {},
+    h('thead', {}, h('tr', {}, h('th', {}, 'Accident'), h('th', {}, 'Heure'), h('th', {}, 'État'), h('th', {}, 'Gravité'), d.stages.map(s => h('th', { class: 'n' }, s)), h('th', { class: 'n' }, 'Total'))),
+    h('tbody', {}, d.incidents.map(r => h('tr', {}, h('td', {}, String(r.id)), h('td', { class: 'num' }, r.created_at ? clock(r.created_at) : '—'), h('td', {}, STATUS[r.status]), h('td', {}, severityPill(r.severity)), r.durations.map(x => h('td', { class: 'n' }, minutes(x))), h('td', { class: 'n' }, minutes(r.totalS))))))) : h('p', { class: 'muted' }, "Pas encore de données. Les délais s'affichent ici après le premier accident.")));
+</script>
+</body>
+</html>
