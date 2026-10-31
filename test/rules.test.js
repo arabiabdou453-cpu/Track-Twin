@@ -157,3 +157,41 @@ test('personal data of closed incidents is removed after 30 days', async () => {
   assert.strictEqual(db.prepare('SELECT phone FROM incidents WHERE id = ?').get(id).phone, null);
   assert.strictEqual(db.prepare('SELECT phone_e164 FROM caller_links WHERE incident_id = ?').get(id).phone_e164, null);
 });
+
+test('a witness adds details to their own report, and they stay unverified', () => {
+  const { app, advance } = makeApp();
+  const { token } = app.appReport({ lat: 36.75, lon: 3.06 });
+  assert.ok(token);
+  app.appReportInfo(token, { victims: 3, vehicles: 2, trapped: true, fire: null, note: ' Bus renversé ' });
+  app.appReportPhoto(token, 'abc.jpg');
+  const r = app.operatorState().pending[0];
+  assert.deepStrictEqual(r.info, { victims: 3, vehicles: 2, trapped: true, fire: null, note: 'Bus renversé' });
+  assert.deepStrictEqual(r.photos, ['abc.jpg']);
+  assert.strictEqual(r.edit_token_hash, undefined);
+  assert.ok(app.photoAllowed('abc.jpg'));
+  const { incidentId } = app.confirmReport(r.id, 'operator');
+  const seen = app.operatorState().incidents.find(i => i.id === incidentId);
+  assert.strictEqual(seen.assessment, null);
+  assert.deepStrictEqual(seen.reports[0].photos, ['abc.jpg']);
+  assert.throws(() => app.appReportInfo('wrong', {}), /introuvable/);
+  assert.throws(() => app.appReportInfo(token, { victims: -1 }), /invalide/);
+  assert.throws(() => app.appReportInfo(token, { note: 'x'.repeat(301) }), /trop long/);
+  app.appReportPhoto(token, 'b.jpg'); app.appReportPhoto(token, 'c.jpg');
+  assert.throws(() => app.appReportCanAddPhoto(token), /maximal/);
+  advance(R.CONFIG.linkTtlMs + 1);
+  assert.throws(() => app.appReportInfo(token, {}), /plus être complété/);
+});
+
+test('witness photos and notes are removed after 30 days, even without a phone or an accident', () => {
+  const { app, db, advance } = makeApp();
+  const kept = app.appReport({ lat: 36.75, lon: 3.06 });
+  app.appReportPhoto(kept.token, 'kept.jpg');
+  app.appReportInfo(kept.token, { note: 'à garder' });
+  const r = app.operatorState().pending[0];
+  app.rejectReport(r.id, 'operator');
+  advance(R.CONFIG.retentionMs + 1);
+  const removed = app.purgeOld();
+  assert.ok(removed.includes('kept.jpg'));
+  assert.strictEqual(db.prepare('SELECT COUNT(*) AS n FROM report_photos').get().n, 0);
+  assert.strictEqual(db.prepare('SELECT info_json FROM reports WHERE id = ?').get(r.id).info_json, null);
+});

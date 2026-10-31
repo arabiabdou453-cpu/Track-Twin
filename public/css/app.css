@@ -233,3 +233,8 @@ h1 { font-family: var(--display); font-size: 34px; line-height: 1; text-transfor
 .rail .brand { font-size: 21px; white-space: nowrap; }
 .crew-time { white-space: nowrap; font-size: clamp(44px, 13vw, 60px); }
 .brand { text-transform: none; }
+
+.witness { display: grid; gap: 8px; justify-items: start; }
+.witness .facts { width: 100%; }
+.witness-photos { display: flex; gap: 8px; flex-wrap: wrap; }
+.witness-photos img { display: block; width: 96px; height: 96px; object-fit: cover; border-radius: var(--r-s); border: 1px solid var(--line); }

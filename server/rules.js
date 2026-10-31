@@ -6,6 +6,7 @@ const CONFIG = {
   severityPoints: { trapped: 3, fire: 3, unconscious: 3, bus: 2, manyVictims: 2, manyVehicles: 1 },
   severityLevels: [{ upTo: 2, level: 'low' }, { upTo: 4, level: 'medium' }, { upTo: 6, level: 'high' }, { upTo: Infinity, level: 'critical' }],
   linkTtlMs: 60 * 60 * 1000,
+  maxReportPhotos: 3,
   mergeRadiusM: 200,
   mergeWindowMs: 10 * 60 * 1000,
   routeRefreshMs: 15 * 1000,

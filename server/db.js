@@ -21,6 +21,11 @@ CREATE TABLE IF NOT EXISTS reports (
   confirmed INTEGER NOT NULL DEFAULT 0, rejected INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS report_photos (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  report_id INTEGER NOT NULL REFERENCES reports(id),
+  path TEXT NOT NULL, created_at INTEGER NOT NULL
+);
 CREATE TABLE IF NOT EXISTS caller_links (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   token_hash TEXT NOT NULL UNIQUE,
@@ -70,6 +75,11 @@ function openDb(file, seedDir) {
   const have = new Set(db.prepare("SELECT name FROM pragma_table_info('missions')").all().map(c => c.name));
   for (const [col, type] of [['suggested_route_json', 'TEXT'], ['suggested_eta', 'REAL'], ['suggested_at', 'INTEGER']]) {
     if (!have.has(col)) db.exec(`ALTER TABLE missions ADD COLUMN ${col} ${type}`);
+  }
+  // What the witness adds from the app, reachable only with the token returned by their own report.
+  const haveReport = new Set(db.prepare("SELECT name FROM pragma_table_info('reports')").all().map(c => c.name));
+  for (const [col, type] of [['info_json', 'TEXT'], ['edit_token_hash', 'TEXT']]) {
+    if (!haveReport.has(col)) db.exec(`ALTER TABLE reports ADD COLUMN ${col} ${type}`);
   }
   if (seedDir && db.prepare('SELECT COUNT(*) AS n FROM hospitals').get().n === 0) seed(db, seedDir);
   return db;

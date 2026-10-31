@@ -12,7 +12,7 @@ document.getElementById('rail').append(
   h('button', { type: 'button', class: 'logout', onclick: async () => { await api('/logout', {}); location.href = '/login'; } }, 'Déconnexion'));
 const priorityOf = i => PRIORITY[i.severity] || 9;
 const refOf = i => `ALG-${new Date(i.created_at).toISOString().slice(0, 10).replaceAll('-', '')}-${String(i.id).padStart(4, '0')}`;
-const EVENT = { incident_created: 'Accident créé', link_sent: 'Lien envoyé au témoin', location_set: 'Lieu reçu', photo_added: 'Photo reçue', app_report: "Signalement depuis l'application", app_report_rejected: 'Signalement rejeté', merged_into: 'Accidents fusionnés', assessed: 'Gravité évaluée', dispatched: 'Unité envoyée', alert_raised: 'Hôpital alerté', hospital_changed: 'Hôpital changé', hospital_ack: 'Hôpital : alerte reçue', hospital_ready: 'Hôpital : équipe prête', hospital_availability: 'Disponibilité hôpital modifiée', closed: 'Accident clôturé', cancelled: 'Accident annulé', route_changed: 'Itinéraire changé', route_suggested: 'Itinéraire plus rapide proposé à l\'équipage', route_accepted: 'Équipage : nouvel itinéraire accepté', route_dismissed: 'Équipage : itinéraire gardé', simulation_started: 'Trajet simulé lancé', ack_escalated: 'Hôpital relancé par SMS', light_refused: 'Feu : commande refusée', crew_accept: 'Équipage : mission acceptée', crew_arrive_scene: 'Équipage : sur les lieux', crew_leave_scene: "Équipage : départ vers l'hôpital", crew_arrive_hospital: "Équipage : arrivé à l'hôpital", victims_updated: 'Nombre de victimes modifié' };
+const EVENT = { incident_created: 'Accident créé', link_sent: 'Lien envoyé au témoin', location_set: 'Lieu reçu', app_info: "Informations du témoin reçues", photo_added: 'Photo reçue', app_report: "Signalement depuis l'application", app_report_rejected: 'Signalement rejeté', merged_into: 'Accidents fusionnés', assessed: 'Gravité évaluée', dispatched: 'Unité envoyée', alert_raised: 'Hôpital alerté', hospital_changed: 'Hôpital changé', hospital_ack: 'Hôpital : alerte reçue', hospital_ready: 'Hôpital : équipe prête', hospital_availability: 'Disponibilité hôpital modifiée', closed: 'Accident clôturé', cancelled: 'Accident annulé', route_changed: 'Itinéraire changé', route_suggested: 'Itinéraire plus rapide proposé à l\'équipage', route_accepted: 'Équipage : nouvel itinéraire accepté', route_dismissed: 'Équipage : itinéraire gardé', simulation_started: 'Trajet simulé lancé', ack_escalated: 'Hôpital relancé par SMS', light_refused: 'Feu : commande refusée', crew_accept: 'Équipage : mission acceptée', crew_arrive_scene: 'Équipage : sur les lieux', crew_leave_scene: "Équipage : départ vers l'hôpital", crew_arrive_hospital: "Équipage : arrivé à l'hôpital", victims_updated: 'Nombre de victimes modifié' };
 const map = baseMap(L, 'map');
 const layer = L.layerGroup().addTo(map);
 const listEl = document.getElementById('list'), detailEl = document.getElementById('detail'), pendingEl = document.getElementById('pending'), msgEl = document.getElementById('msg');
@@ -65,10 +65,23 @@ function drawList() {
   if (!state.incidents.length) listEl.replaceChildren(h('p', { class: 'muted', style: 'padding:12px 14px' }, 'Aucun accident ouvert. Créez-en un quand un appel arrive au 14.'));
 }
 
+// What the witness sent from the app: useful to the agent, never verified, and it changes no assessment by itself.
+function witnessBlock(r) {
+  const a = r.info, yn = v => (v == null ? null : v ? 'Oui' : 'Non');
+  const facts = a ? [['Victimes', a.victims], ['Véhicules', a.vehicles], ['Coincées', yn(a.trapped)], ['Incendie', yn(a.fire)]].filter(x => x[1] != null) : [];
+  if (!facts.length && !(a && a.note) && !r.photos.length) return null;
+  return h('div', { class: 'witness' },
+    h('span', { class: 'pill warn' }, 'Déclaré par le témoin, à vérifier'),
+    facts.length > 0 && h('div', { class: 'facts' }, facts.map(([k, v]) => h('div', { class: 'fact' }, h('span', {}, k), h('b', {}, String(v))))),
+    a && a.note && h('p', {}, a.note),
+    r.photos.length > 0 && h('div', { class: 'witness-photos' }, r.photos.map((p, k) => h('a', { href: `/api/photos/${p}`, target: '_blank' }, h('img', { src: `/api/photos/${p}`, alt: `Photo ${k + 1} du témoin`, loading: 'lazy' })))));
+}
+
 function drawPending() {
   pendingEl.replaceChildren(...state.pending.map(r => h('div', { class: 'block' },
     h('b', {}, `Signalement ${r.id} depuis l'application : à confirmer`),
     h('span', { class: 'muted' }, r.phone ? `Numéro ${r.phone}` : 'Sans numéro', r.nearIncident ? ` • près de l'accident ${r.nearIncident}` : ''),
+    witnessBlock(r),
     h('div', { class: 'row' },
       h('button', { type: 'button', onclick: act(async () => { const x = await api(`/reports/${r.id}/confirm`, {}); selected = x.incidentId; }) }, 'Confirmer comme nouvel accident'),
       r.nearIncident && h('button', { type: 'button', onclick: act(() => api(`/reports/${r.id}/confirm`, { intoId: r.nearIncident })) }, `Rattacher à ${r.nearIncident}`),
@@ -149,6 +162,7 @@ function detail(i) {
       h('div', { class: 'row' }, severityPill(i.severity), h('span', { class: 'pill' }, STATUS[i.status])),
       i.phone && h('span', { class: 'num muted' }, i.phone), i.lat != null && h('span', { class: 'muted' }, `Précision : ${i.accuracy_m ? Math.round(i.accuracy_m) + ' m' : "placé par l'agent"}`),
       i.reports.filter(r => r.photo_path).map(r => h('a', { href: `/api/photos/${r.photo_path}`, target: '_blank' }, 'Photo du témoin')),
+      i.reports.map(witnessBlock),
       i.duplicateOf && h('div', { class: 'row' }, h('span', { class: 'pill warn' }, `Peut-être le même que l'accident ${i.duplicateOf}`), h('button', { type: 'button', onclick: act(async () => { await api(`/incidents/${i.id}/merge`, { intoId: i.duplicateOf }); selected = i.duplicateOf; }) }, 'Fusionner')),
       i.assessment && h('div', { class: 'facts' }, assessmentFacts(i.assessment))),
     !i.missions.length && linkBox(i),

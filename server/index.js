@@ -7,7 +7,7 @@ const { CONFIG } = require('./rules');
 
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC = path.join(ROOT, 'public'), DATA = path.join(ROOT, 'data'), PHOTOS = path.join(DATA, 'photos');
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
 const PAGES = { '/': 'index.html', '/login': 'login.html', '/dispatch': 'dispatch.html', '/metrics': 'metrics.html', '/app': 'app.html', '/twin': 'twin.html' };
 
 // Settings come from .env. On the first run, private values are generated there and never leave this computer.
@@ -73,6 +73,14 @@ function startServer(env = loadEnv()) {
     req.on('end', () => resolve(Buffer.concat(parts)));
     req.on('error', reject);
   });
+  const savePhoto = async req => {
+    const body = await readBody(req, 5 * 1024 * 1024);
+    const png = body[0] === 0x89 && body[1] === 0x50, jpg = body[0] === 0xff && body[1] === 0xd8;
+    if (!png && !jpg) throw new app.ApiError(415, 'Envoyez une image JPG ou PNG');
+    const name = crypto.randomBytes(12).toString('hex') + (png ? '.png' : '.jpg');
+    fs.writeFileSync(path.join(PHOTOS, name), body);
+    return name;
+  };
   const readJson = async req => { const b = await readBody(req, 64 * 1024); try { return b.length ? JSON.parse(b.toString()) : {}; } catch (e) { throw new app.ApiError(400, 'Requête invalide'); } };
 
   function serveFile(res, file, cacheable) {
@@ -115,16 +123,20 @@ function startServer(env = loadEnv()) {
     if ((a = /^\/api\/link\/([\w-]+)\/photo$/.exec(p)) && m === 'POST') {
       if (limited(`photo:${a[1]}`, 5, 600000)) throw new app.ApiError(429, 'Trop de requêtes');
       if (!app.callerStatus(a[1]).valid) throw new app.ApiError(410, 'Ce lien a expiré');
-      const body = await readBody(req, 5 * 1024 * 1024);
-      const png = body[0] === 0x89 && body[1] === 0x50, jpg = body[0] === 0xff && body[1] === 0xd8;
-      if (!png && !jpg) throw new app.ApiError(415, 'Envoyez une image JPG ou PNG');
-      const name = crypto.randomBytes(12).toString('hex') + (png ? '.png' : '.jpg');
-      fs.writeFileSync(path.join(PHOTOS, name), body);
-      return json(res, 200, app.callerPhoto(a[1], name));
+      return json(res, 200, app.callerPhoto(a[1], await savePhoto(req)));
     }
     if (p === '/api/app/report' && m === 'POST') {
       if (limited(`app:${ip}`, 5, 600000)) throw new app.ApiError(429, 'Trop de signalements. Appelez le 14');
       return json(res, 200, app.appReport(await readJson(req)));
+    }
+    if ((a = /^\/api\/app\/report\/([\w-]+)\/info$/.exec(p)) && m === 'POST') {
+      if (limited(`appinfo:${a[1]}`, 20, 600000)) throw new app.ApiError(429, 'Trop de requêtes');
+      return json(res, 200, app.appReportInfo(a[1], await readJson(req)));
+    }
+    if ((a = /^\/api\/app\/report\/([\w-]+)\/photo$/.exec(p)) && m === 'POST') {
+      if (limited(`appphoto:${a[1]}`, 10, 600000)) throw new app.ApiError(429, 'Trop de requêtes');
+      app.appReportCanAddPhoto(a[1]);
+      return json(res, 200, app.appReportPhoto(a[1], await savePhoto(req)));
     }
 
     // ---- logged in

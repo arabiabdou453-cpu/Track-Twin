@@ -111,11 +111,55 @@ function createApp({ db, lights, sms, routes, signals, publicUrl, now = () => Da
   // The citizen app never dispatches anything: its report waits for the operator.
   function appReport(body) {
     const loc = coords(body), phone = body.phone ? R.normalizePhone(body.phone) : null;
-    const { lastInsertRowid } = q("INSERT INTO reports (channel, lat, lon, accuracy_m, phone, created_at) VALUES ('app', ?, ?, ?, ?, ?)").run(loc.lat, loc.lon, body.accuracy == null ? null : number(body.accuracy, 'précision'), phone, now());
+    const token = R.newToken();
+    const { lastInsertRowid } = q("INSERT INTO reports (channel, lat, lon, accuracy_m, phone, edit_token_hash, created_at) VALUES ('app', ?, ?, ?, ?, ?, ?)").run(loc.lat, loc.lon, body.accuracy == null ? null : number(body.accuracy, 'précision'), phone, R.hashToken(token), now());
     log(null, 'citizen', 'app_report', Number(lastInsertRowid));
+    notify();
+    return { ok: true, token };
+  }
+
+  // The witness may add details to their own report for one hour. The agent sees them as unverified, and they change nothing by themselves.
+  function ownReport(token) {
+    const r = q('SELECT * FROM reports WHERE edit_token_hash = ?').get(R.hashToken(String(token))) || fail(404, 'Signalement introuvable');
+    if (r.rejected || now() - r.created_at > CONFIG.linkTtlMs) fail(410, 'Ce signalement ne peut plus être complété');
+    return r;
+  }
+
+  const count = (v, label) => {
+    if (v == null) return null;
+    const n = number(v, label);
+    if (!Number.isInteger(n) || n < 0 || n > 99) fail(400, `Valeur invalide: ${label}`);
+    return n;
+  };
+  const yesNo = (v, label) => { if (v == null) return null; if (typeof v !== 'boolean') fail(400, `Valeur invalide: ${label}`); return v; };
+
+  function appReportInfo(token, body) {
+    const r = ownReport(token);
+    if (body.note != null && typeof body.note !== 'string') fail(400, 'Valeur invalide: note');
+    const note = (body.note || '').trim();
+    if (note.length > 300) fail(400, 'Texte trop long');
+    const info = { victims: count(body.victims, 'victimes'), vehicles: count(body.vehicles, 'véhicules'), trapped: yesNo(body.trapped, 'coincées'), fire: yesNo(body.fire, 'incendie'), note: note || null };
+    q('UPDATE reports SET info_json = ? WHERE id = ?').run(JSON.stringify(info), r.id);
+    log(r.incident_id, 'citizen', 'app_info', r.id);
     notify();
     return { ok: true };
   }
+
+  const appReportCanAddPhoto = token => {
+    const r = ownReport(token);
+    if (q('SELECT COUNT(*) AS n FROM report_photos WHERE report_id = ?').get(r.id).n >= CONFIG.maxReportPhotos) fail(409, 'Nombre maximal de photos atteint');
+    return true;
+  };
+
+  function appReportPhoto(token, relativePath) {
+    const r = ownReport(token);
+    q('INSERT INTO report_photos (report_id, path, created_at) VALUES (?, ?, ?)').run(r.id, relativePath, now());
+    log(r.incident_id, 'citizen', 'photo_added', r.id);
+    notify();
+    return { ok: true };
+  }
+
+  const witnessView = r => ({ ...r, edit_token_hash: undefined, info: r.info_json ? JSON.parse(r.info_json) : null, info_json: undefined, photos: q('SELECT path FROM report_photos WHERE report_id = ? ORDER BY id').all(r.id).map(p => p.path) });
 
   function confirmReport(reportId, actor, intoIncidentId) {
     const r = q('SELECT * FROM reports WHERE id = ?').get(reportId) || fail(404, 'Signalement introuvable');
@@ -413,15 +457,29 @@ function createApp({ db, lights, sms, routes, signals, publicUrl, now = () => Da
 
   const levelText = l => ({ low: 'faible', medium: 'moyenne', high: 'élevée', critical: 'critique' }[l] || 'non définie');
 
+  function clearWitnessData(reportId) {
+    const paths = q('SELECT path FROM report_photos WHERE report_id = ?').all(reportId).map(p => p.path);
+    q('DELETE FROM report_photos WHERE report_id = ?').run(reportId);
+    q('UPDATE reports SET info_json = NULL, edit_token_hash = NULL WHERE id = ?').run(reportId);
+    return paths;
+  }
+
   function purgeOld() {
     const limit = now() - CONFIG.retentionMs;
-    const old = q('SELECT id FROM incidents WHERE (closed_at < ? OR cancelled_at < ?) AND phone IS NOT NULL').all(limit, limit);
+    const old = q('SELECT id FROM incidents WHERE closed_at < ? OR cancelled_at < ?').all(limit, limit);
     const removed = [];
     for (const { id } of old) {
       for (const r of q('SELECT photo_path FROM reports WHERE incident_id = ? AND photo_path IS NOT NULL').all(id)) removed.push(r.photo_path);
+      for (const r of q('SELECT id FROM reports WHERE incident_id = ?').all(id)) removed.push(...clearWitnessData(r.id));
       q('UPDATE incidents SET phone = NULL WHERE id = ?').run(id);
       q('UPDATE reports SET phone = NULL, photo_path = NULL WHERE incident_id = ?').run(id);
       q('UPDATE caller_links SET phone_e164 = NULL WHERE incident_id = ?').run(id);
+    }
+    // Reports never attached to an accident, such as rejected ones, are kept no longer than the others.
+    for (const r of q('SELECT id, photo_path FROM reports WHERE incident_id IS NULL AND created_at < ?').all(limit)) {
+      if (r.photo_path) removed.push(r.photo_path);
+      q('UPDATE reports SET phone = NULL, photo_path = NULL WHERE id = ?').run(r.id);
+      removed.push(...clearWitnessData(r.id));
     }
     return removed;
   }
@@ -452,7 +510,7 @@ function createApp({ db, lights, sms, routes, signals, publicUrl, now = () => Da
     const views = incidents.map(i => ({
       ...i,
       assessment: assessment(i.id),
-      reports: q('SELECT id, channel, lat, lon, accuracy_m, photo_path, confirmed, created_at FROM reports WHERE incident_id = ?').all(i.id),
+      reports: q('SELECT id, channel, lat, lon, accuracy_m, photo_path, info_json, confirmed, created_at FROM reports WHERE incident_id = ?').all(i.id).map(witnessView),
       links: q('SELECT sms_status, used_at, expires_at FROM caller_links WHERE incident_id = ? ORDER BY id DESC LIMIT 1').all(i.id),
       missions: q("SELECT * FROM missions WHERE incident_id = ? AND status NOT IN ('done', 'cancelled')").all(i.id).map(missionView),
       duplicateOf: null,
@@ -462,10 +520,10 @@ function createApp({ db, lights, sms, routes, signals, publicUrl, now = () => Da
       const twin = views.find(o => o.id !== v.id && o.id < v.id && R.isNearDuplicate({ lat: v.lat, lon: v.lon }, { ...o, created_at: v.created_at }, now()) && v.created_at - o.created_at <= CONFIG.mergeWindowMs);
       if (twin) v.duplicateOf = twin.id;
     }
-    const pending = q('SELECT id, lat, lon, accuracy_m, phone, created_at FROM reports WHERE incident_id IS NULL AND confirmed = 0 AND rejected = 0 ORDER BY id DESC LIMIT 50').all()
+    const pending = q('SELECT id, lat, lon, accuracy_m, phone, info_json, created_at FROM reports WHERE incident_id IS NULL AND confirmed = 0 AND rejected = 0 ORDER BY id DESC LIMIT 50').all()
       .map(r => {
         const near = views.find(i => R.isNearDuplicate(r, { ...i, created_at: r.created_at }, now()) && r.created_at - i.created_at <= CONFIG.mergeWindowMs);
-        return { ...r, nearIncident: near ? near.id : null };
+        return { ...witnessView(r), nearIncident: near ? near.id : null };
       });
     return {
       role: 'operator', now: now(), staleAfterS: CONFIG.staleAfterMs / 1000, incidents: views, pending,
@@ -566,12 +624,12 @@ function createApp({ db, lights, sms, routes, signals, publicUrl, now = () => Da
   }
 
   const lightsForMap = () => lights;
-  const photoAllowed = p => Boolean(q('SELECT 1 FROM reports WHERE photo_path = ?').get(p));
+  const photoAllowed = p => Boolean(q('SELECT 1 FROM reports WHERE photo_path = ?').get(p) || q('SELECT 1 FROM report_photos WHERE path = ?').get(p));
   const missionOwnedByUnit = (id, unitId) => mission(id).unit_id === unitId;
   const missionGoesTo = (id, hospitalId) => mission(id).hospital_id === hospitalId;
   const loginOptions = () => ({ units: q('SELECT id, name FROM units ORDER BY id').all(), hospitals: q('SELECT id, name FROM hospitals ORDER BY name').all() });
 
-  return { ApiError, createIncident, sendLink, setIncidentLocation, callerStatus, callerLocation, callerPhoto, appReport, confirmReport, rejectReport, mergeIncident, assess, suggest, dispatch, changeHospital, acknowledge, markReady, setHospitalAvailability, crewAction, answerRoute, updateVictims, closeIncident, setPosition, simulateDrive, advanceSimulated, refreshRoute, tick, purgeOld, operatorState, crewState, hospitalState, metrics, lightsForMap, photoAllowed, missionOwnedByUnit, missionGoesTo, loginOptions, mission, q, log };
+  return { ApiError, createIncident, sendLink, setIncidentLocation, callerStatus, callerLocation, callerPhoto, appReport, appReportInfo, appReportCanAddPhoto, appReportPhoto, confirmReport, rejectReport, mergeIncident, assess, suggest, dispatch, changeHospital, acknowledge, markReady, setHospitalAvailability, crewAction, answerRoute, updateVictims, closeIncident, setPosition, simulateDrive, advanceSimulated, refreshRoute, tick, purgeOld, operatorState, crewState, hospitalState, metrics, lightsForMap, photoAllowed, missionOwnedByUnit, missionGoesTo, loginOptions, mission, q, log };
 }
 
 module.exports = { createApp };

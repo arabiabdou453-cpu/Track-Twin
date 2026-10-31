@@ -1,7 +1,9 @@
 // The witness: one big button, then a clear result. Arabic, for someone frightened on a roadside.
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'api.dart';
@@ -26,12 +28,21 @@ Future<Fix> deviceFix() async {
   return (lat: p.latitude, lon: p.longitude, accuracy: p.accuracy);
 }
 
+typedef TakePhoto = Future<Uint8List?> Function();
+
+// Small enough to reach the server on a weak network.
+Future<Uint8List?> cameraPhoto() async {
+  final shot = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1600, imageQuality: 70);
+  return shot?.readAsBytes();
+}
+
 enum Step { home, sending, confirmed, failed }
 
 class ReportScreen extends StatefulWidget {
-  const ReportScreen({super.key, required this.api, this.locate = deviceFix});
+  const ReportScreen({super.key, required this.api, this.locate = deviceFix, this.takePhoto = cameraPhoto});
   final Api api;
   final Locate locate;
+  final TakePhoto takePhoto;
   @override
   State<ReportScreen> createState() => _ReportScreenState();
 }
@@ -39,10 +50,18 @@ class ReportScreen extends StatefulWidget {
 class _ReportScreenState extends State<ReportScreen> {
   static const _resendAfter = Duration(minutes: 2);
   static const _maxTries = 4;
+  static const _maxPhotos = 3;
   Step step = Step.home;
   String failReason = '';
   DateTime? sentAt;
   final phone = TextEditingController();
+  final note = TextEditingController();
+  String? reportToken;
+  int photosSent = 0;
+  bool photoBusy = false, infoBusy = false, infoSent = false;
+  String photoMessage = '', infoMessage = '';
+  int? victims, vehicles;
+  bool? trapped, fire;
 
   @override
   void initState() {
@@ -55,6 +74,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   void dispose() {
     phone.dispose();
+    note.dispose();
     super.dispose();
   }
 
@@ -81,7 +101,7 @@ class _ReportScreenState extends State<ReportScreen> {
     }
     for (var attempt = 1; attempt <= _maxTries; attempt++) {
       try {
-        await widget.api.report(lat: fix.lat, lon: fix.lon, accuracy: fix.accuracy, phone: phone.text.trim().isEmpty ? null : phone.text.trim());
+        reportToken = await widget.api.report(lat: fix.lat, lon: fix.lon, accuracy: fix.accuracy, phone: phone.text.trim().isEmpty ? null : phone.text.trim());
         sentAt = DateTime.now();
         if (mounted) setState(() => step = Step.confirmed);
         return;
@@ -92,6 +112,46 @@ class _ReportScreenState extends State<ReportScreen> {
       }
     }
     _fail('لا يوجد اتصال بالإنترنت. أخبر العون بمكانك على الخط.');
+  }
+
+  Future<void> _sendPhoto() async {
+    final token = reportToken;
+    if (token == null) return;
+    setState(() => photoMessage = '');
+    Uint8List? bytes;
+    try {
+      bytes = await widget.takePhoto();
+    } catch (_) {
+      if (mounted) setState(() => photoMessage = 'لم نتمكن من فتح الكاميرا.');
+      return;
+    }
+    if (bytes == null || !mounted) return;
+    setState(() => photoBusy = true);
+    try {
+      await widget.api.reportPhoto(token, bytes);
+      photosSent++;
+      photoMessage = 'وصلت الصورة إلى العون.';
+    } catch (_) {
+      photoMessage = 'لم تصل الصورة. أعد المحاولة أو أخبر العون على الخط.';
+    }
+    if (mounted) setState(() => photoBusy = false);
+  }
+
+  Future<void> _sendInfo() async {
+    final token = reportToken;
+    if (token == null) return;
+    setState(() {
+      infoBusy = true;
+      infoMessage = '';
+    });
+    try {
+      await widget.api.reportInfo(token, {'victims': victims, 'vehicles': vehicles, 'trapped': trapped, 'fire': fire, 'note': note.text.trim()});
+      infoSent = true;
+      infoMessage = 'وصلت المعلومات إلى العون. يمكنك تصحيحها وإرسالها مجدداً.';
+    } catch (_) {
+      infoMessage = 'لم تصل المعلومات. أعد المحاولة أو أخبر العون على الخط.';
+    }
+    if (mounted) setState(() => infoBusy = false);
   }
 
   void _fail(String reason) {
@@ -208,9 +268,44 @@ class _ReportScreenState extends State<ReportScreen> {
         Text('في انتظار الإسعاف', style: C14.cairo(fontSize: 20, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
         const _List(['ابتعد عن مسار السيارات.', 'لا تحرك المصاب إلا إذا كان في خطر مباشر.', 'أبقِ هاتفك قريباً منك، فقد يتصل بك العون.']),
+        if (reportToken != null) ...[const SizedBox(height: 16), _details()],
         const Spacer(),
+        const SizedBox(height: 16),
         if (live14) BigButton(label: 'اتصل مجدداً بالرقم 14', onPressed: _call),
         if (!live14) BigButton(label: 'بلاغ جديد', outlined: true, height: 56, onPressed: () => setState(() => step = Step.home)),
+      ]);
+
+  // Optional: the location has already gone, and nothing here delays it.
+  Widget _details() => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text('ساعد العون (اختياري)', style: C14.cairo(fontSize: 20, fontWeight: FontWeight.w800)),
+        Text('لا تصوّر ولا تقترب إذا كان ذلك يعرضك للخطر.', style: C14.cairo(fontSize: 15, fontWeight: FontWeight.w600, color: C14.amberText)),
+        const SizedBox(height: 8),
+        Panel(child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          BigButton(
+            key: const Key('photo'),
+            label: photoBusy ? 'جارٍ إرسال الصورة' : photosSent == 0 ? 'صوّر الحادث' : 'صورة أخرى',
+            height: 56,
+            color: C14.ink,
+            onPressed: photoBusy || photosSent >= _maxPhotos ? null : _sendPhoto,
+          ),
+          const SizedBox(height: 6),
+          Text(photosSent >= _maxPhotos ? 'أُرسلت $photosSent صور، وهو الحد الأقصى.' : 'أُرسل: $photosSent من $_maxPhotos', style: C14.cairo(fontSize: 14, color: C14.ink3)),
+          if (photoMessage.isNotEmpty) Text(photoMessage, style: C14.cairo(fontSize: 15, fontWeight: FontWeight.w600)),
+        ])),
+        const SizedBox(height: 12),
+        Panel(child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          _Count(label: 'عدد المصابين', value: victims, keyName: 'victims', onChanged: (v) => setState(() => victims = v)),
+          _Count(label: 'عدد المركبات', value: vehicles, keyName: 'vehicles', onChanged: (v) => setState(() => vehicles = v)),
+          _YesNo(label: 'هل يوجد عالقون داخل مركبة؟', value: trapped, onChanged: (v) => setState(() => trapped = v)),
+          _YesNo(label: 'هل يوجد حريق؟', value: fire, onChanged: (v) => setState(() => fire = v)),
+          const SizedBox(height: 8),
+          TextField(key: const Key('note'), controller: note, maxLines: 3, maxLength: 300, decoration: const InputDecoration(hintText: 'معلومة أخرى: معلم قريب، اتجاه السير، خطر على الطريق')),
+          const SizedBox(height: 4),
+          BigButton(key: const Key('sendInfo'), label: infoBusy ? 'جارٍ الإرسال' : infoSent ? 'تحديث المعلومات' : 'أرسل المعلومات', height: 56, onPressed: infoBusy ? null : _sendInfo),
+          if (infoMessage.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 6), child: Text(infoMessage, style: C14.cairo(fontSize: 15, fontWeight: FontWeight.w600))),
+        ])),
+        const SizedBox(height: 8),
+        Text('العون يتحقق من هذه المعلومات. تُستعمل لهذا الحادث فقط، وتُحذف الصور والمعلومات بعد 30 يوماً.', style: C14.cairo(fontSize: 13, color: C14.ink3)),
       ]);
 
   Widget _failed() => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -227,6 +322,42 @@ class _ReportScreenState extends State<ReportScreen> {
         const Spacer(),
         _again('أعد إرسال موقعي'),
       ]);
+}
+
+// Empty means "I don't know", which is different from zero.
+class _Count extends StatelessWidget {
+  const _Count({required this.label, required this.value, required this.keyName, required this.onChanged});
+  final String label, keyName;
+  final int? value;
+  final ValueChanged<int?> onChanged;
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(children: [
+          Expanded(child: Text(label, style: C14.cairo(fontSize: 16, fontWeight: FontWeight.w600))),
+          IconButton(tooltip: 'أقل', icon: const Icon(Icons.remove_circle_outline), onPressed: value == null ? null : () => onChanged(value == 0 ? null : value! - 1)),
+          SizedBox(width: 44, child: Text(value?.toString() ?? '؟', key: Key('$keyName-value'), textAlign: TextAlign.center, style: C14.cairo(fontSize: 20, fontWeight: FontWeight.w800))),
+          IconButton(key: Key('$keyName-plus'), tooltip: 'أكثر', icon: const Icon(Icons.add_circle_outline), onPressed: (value ?? 0) >= 99 ? null : () => onChanged((value ?? -1) + 1)),
+        ]),
+      );
+}
+
+class _YesNo extends StatelessWidget {
+  const _YesNo({required this.label, required this.value, required this.onChanged});
+  final String label;
+  final bool? value;
+  final ValueChanged<bool?> onChanged;
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(label, style: C14.cairo(fontSize: 16, fontWeight: FontWeight.w600)),
+          Wrap(spacing: 8, children: [
+            ChoiceChip(label: const Text('نعم'), selected: value == true, onSelected: (on) => onChanged(on ? true : null)),
+            ChoiceChip(label: const Text('لا'), selected: value == false, onSelected: (on) => onChanged(on ? false : null)),
+          ]),
+        ]),
+      );
 }
 
 class _DemoBar extends StatelessWidget {

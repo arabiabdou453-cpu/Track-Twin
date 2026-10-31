@@ -1,5 +1,6 @@
 // Talks to the same Track Twin server as the website.
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 class ApiError implements Exception {
@@ -45,8 +46,18 @@ class Api {
     return _read(r);
   }
 
-  Future<void> report({required double lat, required double lon, required double accuracy, String? phone}) =>
-      post('/app/report', {'lat': lat, 'lon': lon, 'accuracy': accuracy.round(), 'phone': phone});
+  // Returns the token that lets this witness add a photo or details to their own report.
+  Future<String?> report({required double lat, required double lon, required double accuracy, String? phone}) async {
+    final data = await post('/app/report', {'lat': lat, 'lon': lon, 'accuracy': accuracy.round(), 'phone': phone});
+    return data is Map ? data['token'] as String? : null;
+  }
+
+  Future<void> reportInfo(String token, Map<String, dynamic> info) => post('/app/report/$token/info', info);
+
+  Future<void> reportPhoto(String token, Uint8List bytes) async {
+    final r = await _client.post(_uri('/app/report/$token/photo'), headers: {'Content-Type': 'image/jpeg'}, body: bytes).timeout(const Duration(seconds: 60));
+    await _read(r);
+  }
 
   Future<List<Map<String, dynamic>>> units() async =>
       ((await get('/login-options'))['units'] as List).cast<Map<String, dynamic>>();

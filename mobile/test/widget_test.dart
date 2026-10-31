@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:track_twin/api.dart';
 import 'package:track_twin/crew_screen.dart';
 import 'package:track_twin/report_screen.dart';
@@ -42,6 +43,55 @@ void main() {
     expect(find.text('وصل موقعك إلى العون'), findsOneWidget);
     expect(sent!['lat'], 36.75);
     expect(sent!['accuracy'], 12);
+  });
+
+  testWidgets('after the report, a photo and details reach the agent', (t) async {
+    final calls = <String, http.Request>{};
+    final api = Api('http://x', client: MockClient((r) async {
+      calls[r.url.path] = r;
+      return http.Response(jsonEncode(r.url.path == '/api/app/report' ? {'ok': true, 'token': 'tok-1'} : {'ok': true}), 200);
+    }));
+    await pump(t, ReportScreen(api: api, locate: goodFix, takePhoto: () async => Uint8List.fromList([0xff, 0xd8, 1])));
+    await t.tap(find.byKey(const Key('call')));
+    await settle(t);
+
+    final photo = find.byKey(const Key('photo'));
+    await t.ensureVisible(photo);
+    await t.pump();
+    await t.tap(photo);
+    await settle(t);
+    expect(find.text('وصلت الصورة إلى العون.'), findsOneWidget);
+    final sentPhoto = calls['/api/app/report/tok-1/photo']!;
+    expect(sentPhoto.headers['Content-Type'], startsWith('image/jpeg'));
+    expect(sentPhoto.bodyBytes, [0xff, 0xd8, 1]);
+
+    final plus = find.byKey(const Key('victims-plus'));
+    await t.ensureVisible(plus);
+    await t.pump();
+    await t.tap(plus);
+    await t.pump();
+    await t.tap(plus);
+    await t.pump();
+    await t.enterText(find.byKey(const Key('note')), 'قرب الجسر');
+    final send = find.byKey(const Key('sendInfo'));
+    await t.ensureVisible(send);
+    await t.pump();
+    await t.tap(send);
+    await settle(t);
+    final info = jsonDecode(calls['/api/app/report/tok-1/info']!.body) as Map<String, dynamic>;
+    expect(info['victims'], 1);
+    expect(info['vehicles'], isNull);
+    expect(info['trapped'], isNull);
+    expect(info['note'], 'قرب الجسر');
+    expect(find.textContaining('وصلت المعلومات'), findsOneWidget);
+  });
+
+  testWidgets('a report the server gave no token for offers no extra details', (t) async {
+    final api = Api('http://x', client: MockClient((r) async => http.Response('{"ok":true}', 200)));
+    await pump(t, ReportScreen(api: api, locate: goodFix));
+    await t.tap(find.byKey(const Key('call')));
+    await settle(t);
+    expect(find.byKey(const Key('photo')), findsNothing);
   });
 
   testWidgets('a failed location shows what to tell the agent', (t) async {
